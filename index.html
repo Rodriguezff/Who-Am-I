@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Dados e Cartas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden; /* Adicionado para evitar scroll horizontal em caso de elementos fora da tela */
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        .game-area {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            width: 100%;
+        }
+        
+        .dice-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .cards-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .card-decks {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+        }
+        
+        .card-deck-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 220px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: #fff; /* Adicionado um fundo para o container do deck */
+            border-radius: 15px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .card-deck-container.active {
+            transform: translateY(-10px) scale(1.05);
+            z-index: 10;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8); /* Destaque amarelo para o deck ativo */
+        }
+        
+        .card-deck-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .card-display {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            overflow: hidden;
+            background-color: #f8f9fa; /* Adicionado cor de fundo para a área de exibição da carta */
+        }
+        
+        .card-display.active {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
+        
+        .card-back {
+            width: 100%;
+            height: 100%;
+            background-color: #2c3e50;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            border-radius: 15px;
+            position: absolute; /* Adicionado */
+            top: 0; left: 0; /* Adicionado */
+            backface-visibility: hidden; /* Adicionado */
+            transition: transform 0.6s; /* Adicionado para o flip */
+        }
+        
+        .card-front {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: white;
+            display: flex; /* Alterado de 'none' para 'flex' para gerenciar com transform */
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+            overflow: hidden;
+            backface-visibility: hidden; /* Adicionado */
+            transform: rotateY(180deg); /* Escondida por padrão */
+            transition: transform 0.6s; /* Adicionado para o flip */
+        }
+        
+        /* A classe 'visible' em card-front agora gira a carta */
+        .card-front.visible {
+            transform: rotateY(0deg);
+        }
+
+        /* E a classe 'flipped' no card-display controla o flip */
+        .card-display.flipped .card-back {
+            transform: rotateY(180deg);
+        }
+        .card-display.flipped .card-front {
+            transform: rotateY(0deg);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+            border-radius: 15px;
+        }
+        
+        .dice-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+        }
+        
+        .dice-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
+        
+        .canvas-container {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(45deg, #8b5a2b, #a0522d);
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            display: flex; /* Adicionado para centralizar o dado */
+            justify-content: center; /* Adicionado para centralizar o dado */
+            align-items: center; /* Adicionado para centralizar o dado */
+        }
+        
+        .dice {
+            position: absolute; /* Alterado para absoluto para centralizar o shape */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .dice-shape {
+            width: 70%;
+            height: 70%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.1s;
+        }
+        
+        .d10-shape {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white; /* Cor do ícone do D10 */
+            font-size: 48px; /* Tamanho do ícone do D10 */
+            font-weight: bold;
+            text-shadow: 0 0 10px #ffcc00;
+            user-select: none;
+        }
+        
+        .dice-value {
+             /* Removido, o estilo foi movido para .d10-shape */
+        }
+        
+        .roll-button {
+            padding: 12px 24px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        
+        .roll-button:hover {
+            background-color: #1a2530;
+        }
+
+        .roll-button:disabled { /* Estilo para botão desabilitado */
+            background-color: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+        
+        .draw-button {
+            padding: 10px 20px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+        .draw-button.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .draw-button.active:hover {
+            background-color: #219653;
+        }
+
+        .draw-button:disabled { /* Estilo para botão desabilitado */
+            background-color: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+            opacity: 0.5; /* Mantém a opacidade mesmo que active */
+        }
+        
+        .result {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            min-height: 30px;
+        }
+        
+        /* Estilo para o ícone de balão de localização */
+        .location-balloon {
+            width: 36px;
+            height: 36px;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .location-balloon::before {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: #EA4335;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            box-shadow: 0 0 10px #ffcc00;
+            top: 0;
+            left: 3px;
+        }
+        
+        .location-balloon::after {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background-color: white;
+            border-radius: 50%;
+            z-index: 1;
+            top: 8px;
+            left: 11px;
+        }
+        
+        /* Efeito de monte de cartas */
+        .card-stack {
+            position: relative;
+        }
+        
+        /* Ajustei a posição das "cópias" para ficarem mais próximas e não cobrirem o conteúdo */
+        .card-stack::before,
+        .card-stack::after {
+            content: '';
+            position: absolute;
+            width: 95%; /* Ligeiramente menor */
+            height: 95%; /* Ligeiramente menor */
+            background-color: #2c3e50;
+            border-radius: 15px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1); /* Sombra mais suave */
+            z-index: -1;
+        }
+        
+        .card-stack::before {
+            top: -2px; /* Menos deslocamento */
+            left: -2px;
+            transform: rotate(-2deg); /* Rotação suave */
+        }
+        
+        .card-stack::after {
+            top: 2px; /* Menos deslocamento */
+            left: 2px;
+            transform: rotate(2deg); /* Rotação suave */
+        }
+        
+        .free-choice-message {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e74c3c;
+            text-align: center;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .free-choice-message.active {
+            display: block;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .card-counter {
+            font-size: 14px;
+            color: #555;
+            margin-top: 5px;
+            text-align: center;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @media (max-width: 1200px) {
+            .card-decks {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .canvas-container {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .d10-shape {
+                font-size: 36px;
+            }
+            
+            .location-balloon {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .location-balloon::before {
+                width: 24px;
+                height: 24px;
+                top: 0;
+                left: 3px;
+            }
+            
+            .location-balloon::after {
+                width: 10px;
+                height: 10px;
+                top: 7px;
+                left: 10px;
+            }
+            
+            .card-display {
+                height: 250px;
+            }
+            
+            .card-deck-container {
+                width: 180px;
+            }
+        }
+        
+        @keyframes shake {
+            0% { transform: rotate(0deg); }
+            10% { transform: rotate(5deg); }
+            20% { transform: rotate(-5deg); }
+            30% { transform: rotate(4deg); }
+            40% { transform: rotate(-4deg); }
+            50% { transform: rotate(3deg); }
+            60% { transform: rotate(-3deg); }
+            70% { transform: rotate(2deg); }
+            80% { transform: rotate(-2deg); }
+            90% { transform: rotate(1deg); }
+            100% { transform: rotate(0deg); }
+        }
+        
+        .rolling {
+            animation: shake 2s ease-in-out;
+        }
+        
+        .instructions {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #555;
+            font-size: 18px;
+        }
+
+        /* --- Novo CSS para a Carta em Destaque --- */
+        .highlight-card-area {
+            background-color: #e0e0e0;
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            min-height: 400px; /* Altura mínima para não colapsar */
+            width: min(400px, 90vw); /* Largura flexível, max 400px */
+            justify-content: center; /* Centraliza conteúdo verticalmente */
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            position: relative; /* Para posicionar o botão de fechar */
+        }
+
+        .highlight-card-area.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .highlight-card-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .highlight-card-image-container {
+            width: 100%;
+            height: 100%; /* Ocupa o restante do espaço */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1; /* Permite que ocupe o espaço disponível */
+        }
+
+        .highlight-card-image {
+            max-width: 90%; /* Ajusta para um pouco de margem */
+            max-height: 90%; /* Ajusta para um pouco de margem */
+            object-fit: contain;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .close-highlight-button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px; /* Espaço abaixo da carta */
+        }
+
+        .close-highlight-button:hover {
+            background-color: #c82333;
+        }
+        /* --- Fim do Novo CSS --- */
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Jogo de Dados e Cartas</h1>
+        
+        <div class="game-area">
+            <div class="dice-section">
+                <div class="dice-container">
+                    <div class="dice-title">D10 - Categorias</div>
+                    <div class="canvas-container">
+                        <div class="dice">
+                            <div id="d10-shape" class="dice-shape d10-shape">
+                                <span id="d10-value">🎵</span> </div>
+                        </div>
+                    </div>
+                    <button class="roll-button" id="roll-d10">Rolar D10</button>
+                    <div class="result" id="d10-result"></div>
+                </div>
+            </div>
+
+            <div class="highlight-card-area" id="highlight-card-area">
+                <div class="highlight-card-title" id="highlight-card-title"></div>
+                <div class="highlight-card-image-container">
+                    <img class="highlight-card-image" id="highlight-card-image" src="" alt="Carta em destaque">
+                </div>
+                <button class="close-highlight-button" id="close-highlight-button">Fechar Destaque</button>
+            </div>
+            <div class="cards-section">
+                <div class="instructions">Role o D10 para selecionar uma categoria e puxar uma carta do monte correspondente</div>
+                <div class="free-choice-message" id="free-choice-message">ESCOLHA LIVRE! Selecione qualquer monte de cartas</div>
+                
+                <div class="card-decks">
+                    <div class="card-deck-container" id="deck-container-0">
+                        <div class="card-deck-title">Music</div>
+                        <div class="card-display card-stack" id="card-display-0">
+                            <div class="card-back">
+                                <div class="card-back-icon">🎵</div>
+                                <div class="card-back-text">Music</div>
+                            </div>
+                            <div class="card-front" id="card-front-0">
+                                <img class="card-image" id="card-image-0" src="" alt="Carta de Music">
+                            </div>
+                        </div>
+                        <button class="draw-button" id="draw-card-0">Puxar Carta</button>
+                        <div class="card-counter" id="counter-0"></div>
+                    </div>
+                    
+                    <div class="card-deck-container" id="deck-container-1">
+                        <div class="card-deck-title">Sports</div>
+                        <div class="card-display card-stack" id="card-display-1">
+                            <div class="card-back">
+                                <div class="card-back-icon">🏆</div>
+                                <div class="card-back-text">Sports</div>
+                            </div>
+                            <div class="card-front" id="card-front-1">
+                                <img class="card-image" id="card-image-1" src="" alt="Carta de Sports">
+                            </div>
+                        </div>
+                        <button class="draw-button" id="draw-card-1">Puxar Carta</button>
+                        <div class="card-counter" id="counter-1"></div>
+                    </div>
+                    
+                    <div class="card-deck-container" id="deck-container-2">
+                        <div class="card-deck-title">School</div>
+                        <div class="card-display card-stack" id="card-display-2">
+                            <div class="card-back">
+                                <div class="card-back-icon">🎓</div>
+                                <div class="card-back-text">School</div>
+                            </div>
+                            <div class="card-front" id="card-front-2">
+                                <img class="card-image" id="card-image-2" src="" alt="Carta de School">
+                            </div>
+                        </div>
+                        <button class="draw-button" id="draw-card-2">Puxar Carta</button>
+                        <div class="card-counter" id="counter-2"></div>
+                    </div>
+                    
+                    <div class="card-deck-container" id="deck-container-3">
+                        <div class="card-deck-title">Objects</div>
+                        <div class="card-display card-stack" id="card-display-3">
+                            <div class="card-back">
+                                <div class="card-back-icon">📢</div>
+                                <div class="card-back-text">Objects</div>
+                            </div>
+                            <div class="card-front" id="card-front-3">
+                                <img class="card-image" id="card-image-3" src="" alt="Carta de Objects">
+                            </div>
+                        </div>
+                        <button class="draw-button" id="draw-card-3">Puxar Carta</button>
+                        <div class="card-counter" id="counter-3"></div>
+                    </div>
+                    
+                    <div class="card-deck-container" id="deck-container-4">
+                        <div class="card-deck-title">Movies</div>
+                        <div class="card-display card-stack" id="card-display-4">
+                            <div class="card-back">
+                                <div class="card-back-icon">🎥</div>
+                                <div class="card-back-text">Movies</div>
+                            </div>
+                            <div class="card-front" id="card-front-4">
+                                <img class="card-image" id="card-image-4" src="" alt="Carta de Movies">
+                            </div>
+                        </div>
+                        <button class="draw-button" id="draw-card-4">Puxar Carta</button>
+                        <div class="card-counter" id="counter-4"></div>
+                    </div>
+                    
+                    <div class="card-deck-container" id="deck-container-5">
+                        <div class="card-deck-title">TV</div>
+                        <div class="card-display card-stack" id="card-display-5">
+                            <div class="card-back">
+                                <div class="card-back-icon">📺</div>
+                                <div class="card-back-text">TV</div>
+                            </div>
+                            <div class="card-front" id="card-front-5">
+                                <img class="card-image" id="card-image-5" src="" alt="Carta de TV">
+                            </div>
+                        </div>
+                        <button class="draw-button" id="draw-card-5">Puxar Carta</button>
+                        <div class="card-counter" id="counter-5"></div>
+                    </div>
+                    
+                    <div class="card-deck-container" id="deck-container-7">
+                        <div class="card-deck-title">Places</div>
+                        <div class="card-display card-stack" id="card-display-7">
+                            <div class="card-back">
+                                <div class="location-balloon"></div>
+                                <div class="card-back-text">Places</div>
+                            </div>
+                            <div class="card-front" id="card-front-7">
+                                <img class="card-image" id="card-image-7" src="" alt="Carta de Places">
+                            </div>
+                        </div>
+                        <button class="draw-button" id="draw-card-7">Puxar Carta</button>
+                        <div class="card-counter" id="counter-7"></div>
+                    </div>
+                    
+                    <div class="card-deck-container" id="deck-container-8">
+                        <div class="card-deck-title">Authors</div>
+                        <div class="card-display card-stack" id="card-display-8">
+                            <div class="card-back">
+                                <div class="card-back-icon">📕</div>
+                                <div class="card-back-text">Authors</div>
+                            </div>
+                            <div class="card-front" id="card-front-8">
+                                <img class="card-image" id="card-image-8" src="" alt="Carta de Authors">
+                            </div>
+                        </div>
+                        <button class="draw-button" id="draw-card-8">Puxar Carta</button>
+                        <div class="card-counter" id="counter-8"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Array de ícones para o D10
+        const d10Icons = ['🎵', '🏆', '🎓', '📢', '🎥', '📺', '❓', '📍', '📕', '💼'];
+        
+        // Índice do ícone de localização e free choice
+        const locationIconIndex = 7;
+        const freeChoiceIndex = 6;
+        const authorsIconIndex = 8;
+        
+        // Categorias e seus respectivos cards
+        const categories = {
+            0: { // Music (nota musical)
+                name: 'Music',
+                icon: '🎵',
+                cards: [
+                    'music/01.jpg', 'music/02.jpg', 'music/03.jpg', 'music/04.jpg', 'music/05.jpg',
+                    'music/06.jpg', 'music/07.jpg', 'music/08.jpg', 'music/09.jpg', 'music/10.jpg',
+                    'music/11.jpg', 'music/12.jpg', 'music/13.jpg', 'music/14.jpg', 'music/15.jpg',
+                    'music/16.jpg', 'music/17.jpg', 'music/18.jpg', 'music/19.jpg', 'music/20.jpg'
+                ]
+            },
+            1: { // Sports (troféu)
+                name: 'Sports',
+                icon: '🏆',
+                cards: [
+                    'sports/01.jpg', 'sports/02.jpg', 'sports/03.jpg', 'sports/04.jpg', 'sports/05.jpg',
+                    'sports/06.jpg', 'sports/07.jpg', 'sports/08.jpg', 'sports/09.jpg', 'sports/10.jpg',
+                    'sports/11.jpg', 'sports/12.jpg', 'sports/13.jpg', 'sports/14.jpg', 'sports/15.jpg',
+                    'sports/16.jpg', 'sports/17.jpg', 'sports/18.jpg', 'sports/19.jpg', 'sports/20.jpg'
+                ]
+            },
+            2: { // School (chapéu de formatura)
+                name: 'School',
+                icon: '🎓',
+                cards: [
+                    'school/01.jpg', 'school/02.jpg', 'school/03.jpg', 'school/04.jpg', 'school/05.jpg',
+                    'school/06.jpg', 'school/07.jpg', 'school/08.jpg', 'school/09.jpg', 'school/10.jpg',
+                    'school/11.jpg', 'school/12.jpg', 'school/13.jpg', 'school/14.jpg', 'school/15.jpg',
+                    'school/16.jpg', 'school/17.jpg', 'school/18.jpg', 'school/19.jpg', 'school/20.jpg'
+                ]
+            },
+            3: { // Objects (megafone)
+                name: 'Objects',
+                icon: '📢',
+                cards: [
+                    'objects/01.jpg', 'objects/02.jpg', 'objects/03.jpg', 'objects/04.jpg', 'objects/05.jpg',
+                    'objects/06.jpg', 'objects/07.jpg', 'objects/08.jpg', 'objects/09.jpg', 'objects/10.jpg',
+                    'objects/11.jpg', 'objects/12.jpg', 'objects/13.jpg', 'objects/14.jpg', 'objects/15.jpg',
+                    'objects/16.jpg', 'objects/17.jpg', 'objects/18.jpg', 'objects/19.jpg', 'objects/20.jpg'
+                ]
+            },
+            4: { // Movies (câmera de cinema)
+                name: 'Movies',
+                icon: '🎥',
+                cards: [
+                    'movies/01.jpg', 'movies/02.jpg', 'movies/03.jpg', 'movies/04.jpg', 'movies/05.jpg',
+                    'movies/06.jpg', 'movies/07.jpg', 'movies/08.jpg', 'movies/09.jpg', 'movies/10.jpg',
+                    'movies/11.jpg', 'movies/12.jpg', 'movies/13.jpg', 'movies/14.jpg', 'movies/15.jpg',
+                    'movies/16.jpg', 'movies/17.jpg', 'movies/18.jpg', 'movies/19.jpg', 'movies/20.jpg'
+                ]
+            },
+            5: { // TV (televisão)
+                name: 'TV',
+                icon: '📺',
+                cards: [
+                    'tv/01.jpg', 'tv/02.jpg', 'tv/03.jpg', 'tv/04.jpg', 'tv/05.jpg',
+                    'tv/06.jpg', 'tv/07.jpg', 'tv/08.jpg', 'tv/09.jpg', 'tv/10.jpg',
+                    'tv/11.jpg', 'tv/12.jpg', 'tv/13.jpg', 'tv/14.jpg', 'tv/15.jpg',
+                    'tv/16.jpg', 'tv/17.jpg', 'tv/18.jpg', 'tv/19.jpg', 'tv/20.jpg'
+                ]
+            },
+            6: { // Free Choice (ponto de interrogação)
+                name: 'Free Choice',
+                icon: '❓',
+                cards: []
+            },
+            7: { // Places (balão de localização)
+                name: 'Places',
+                icon: '📍',
+                cards: [
+                    'places/01.jpg', 'places/02.jpg', 'places/03.jpg', 'places/04.jpg', 'places/05.jpg',
+                    'places/06.jpg', 'places/07.jpg', 'places/08.jpg', 'places/09.jpg', 'places/10.jpg',
+                    'places/11.jpg', 'places/12.jpg', 'places/13.jpg', 'places/14.jpg', 'places/15.jpg',
+                    'places/16.jpg', 'places/17.jpg', 'places/18.jpg', 'places/19.jpg', 'places/20.jpg'
+                ]
+            },
+            8: { // Authors (livro vermelho)
+                name: 'Authors',
+                icon: '📕',
+                cards: [
+                    'authors/01.jpg', 'authors/02.jpg', 'authors/03.jpg', 'authors/04.jpg', 'authors/05.jpg',
+                    'authors/06.jpg', 'authors/07.jpg', 'authors/08.jpg', 'authors/09.jpg', 'authors/10.jpg',
+                    'authors/11.jpg', 'authors/12.jpg', 'authors/13.jpg', 'authors/14.jpg', 'authors/15.jpg',
+                    'authors/16.jpg', 'authors/17.jpg', 'authors/18.jpg', 'authors/19.jpg', 'authors/20.jpg'
+                ]
+            },
+            9: { // Professions (maleta) - Este deck não tem cards no seu exemplo, então não seria ativado para puxada.
+                name: 'Professions',
+                icon: '💼',
+                cards: []
+            }
+        };
+        
+        // DOM elements
+        const d10Shape = document.getElementById('d10-shape');
+        const d10Value = document.getElementById('d10-value');
+        const d10Result = document.getElementById('d10-result');
+        const freeChoiceMessage = document.getElementById('free-choice-message');
+
+        // Novos elementos para a carta em destaque
+        const highlightCardArea = document.getElementById('highlight-card-area');
+        const highlightCardTitle = document.getElementById('highlight-card-title');
+        const highlightCardImage = document.getElementById('highlight-card-image');
+        const closeHighlightButton = document.getElementById('close-highlight-button');
+        
+        // Initial values
+        let d10CurrentValue = 0;
+        let activeCategory = null;
+        let isDrawingCard = false; // Adicionada flag para evitar cliques múltiplos
+        
+        // Armazenar os decks embaralhados para cada categoria
+        const shuffledDecks = {};
+        
+        // Armazenar o índice atual de cada deck
+        const currentCardIndices = {};
+        
+        // Função para embaralhar um array (algoritmo Fisher-Yates)
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+        
+        // Função para inicializar os decks embaralhados
+        function initializeShuffledDecks() {
+            for (const categoryIndex in categories) {
+                // Apenas embaralha decks que realmente têm cartas
+                if (categories[categoryIndex].cards && categories[categoryIndex].cards.length > 0) {
+                    shuffledDecks[categoryIndex] = shuffleArray(categories[categoryIndex].cards);
+                    currentCardIndices[categoryIndex] = 0; // Inicia o índice em 0
+                    updateCardCounter(categoryIndex);
+                } else {
+                    // Para categorias sem cartas (ex: Professions), inicializa deck vazio para evitar erros
+                    shuffledDecks[categoryIndex] = [];
+                    currentCardIndices[categoryIndex] = 0;
+                    updateCardCounter(categoryIndex);
+                }
+            }
+        }
+        
+        // Função para obter a próxima carta do deck embaralhado
+        function getNextCard(categoryIndex) {
+            if (!shuffledDecks[categoryIndex] || shuffledDecks[categoryIndex].length === 0) {
+                console.warn(`Deck da categoria ${categories[categoryIndex].name} está vazio.`);
+                return null;
+            }
+            
+            let index = currentCardIndices[categoryIndex];
+            
+            // Se chegou ao fim do deck, embaralhar novamente e resetar o índice
+            if (index >= shuffledDecks[categoryIndex].length) {
+                console.log(`Reembaralhando o deck de ${categories[categoryIndex].name}.`);
+                shuffledDecks[categoryIndex] = shuffleArray(categories[categoryIndex].cards);
+                index = 0;
+                currentCardIndices[categoryIndex] = 0;
+            }
+            
+            // Obter a carta e incrementar o índice
+            const card = shuffledDecks[categoryIndex][index];
+            currentCardIndices[categoryIndex]++;
+            
+            // Atualizar o contador de cartas
+            updateCardCounter(categoryIndex);
+            
+            return card;
+        }
+        
+        // Função para atualizar o contador de cartas
+        function updateCardCounter(categoryIndex) {
+            const counterElement = document.getElementById(`counter-${categoryIndex}`);
+            if (counterElement) {
+                const totalCards = categories[categoryIndex].cards ? categories[categoryIndex].cards.length : 0;
+                const remainingCards = (shuffledDecks[categoryIndex] ? shuffledDecks[categoryIndex].length : 0) - currentCardIndices[categoryIndex]; // Bug fix: remaining cards logic
+                
+                // Exibe "X de Y" se ainda houver cartas no deck original, ou apenas o total.
+                // Ajustado para mostrar "X/Y" de cartas no deck.
+                // if (totalCards > 0) {
+                //     counterElement.textContent = `Cartas: ${currentCardIndices[categoryIndex]}/${shuffledDecks[categoryIndex].length}`;
+                // } else {
+                //     counterElement.textContent = `Cartas: 0`; // Deck vazio
+                // }
+                // Correção: o contador deve mostrar quantas cartas faltam no deck embaralhado.
+                counterElement.textContent = `Cartas: ${shuffledDecks[categoryIndex].length - currentCardIndices[categoryIndex]} / ${categories[categoryIndex].cards.length}`;
+            }
+        }
+        
+        // Função para atualizar o valor do D10
+        function updateD10Value(value) {
+            if (value === locationIconIndex) {
+                d10Value.innerHTML = '<div class="location-balloon"></div>';
+            } else {
+                d10Value.textContent = d10Icons[value];
+            }
+        }
+        
+        // Função para obter o texto do resultado do D10
+        function getD10ResultText(value) {
+            return `Resultado: ${categories[value].name}`;
+        }
+        
+        // Função para resetar todos os botões de puxar e o estado visual do jogo
+        function resetGameState() {
+            document.getElementById('roll-d10').disabled = false; // Re-habilita o botão de rolar D10
+            
+            document.querySelectorAll('.card-deck-container').forEach(container => {
+                container.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.card-display').forEach(display => {
+                display.classList.remove('active');
+                display.classList.remove('flipped'); // Esconde a carta pequena virada
+            });
+            
+            document.querySelectorAll('.draw-button').forEach(button => {
+                button.classList.remove('active');
+                button.disabled = true; // Garante que todos estejam desabilitados
+            });
+            
+            document.querySelectorAll('.card-front').forEach(front => {
+                // Limpa a imagem para garantir que não apareça a imagem anterior em reembaralhamento
+                document.getElementById(front.id.replace('card-front-', 'card-image-')).src = ''; 
+            });
+            
+            freeChoiceMessage.classList.remove('active'); // Esconde a mensagem de escolha livre
+            activeCategory = null; // Reseta a categoria ativa
+            
+            hideHighlightCard(); // Esconde a carta em destaque
+        }
+
+        // Função para ativar o modo Free Choice
+        function activateFreeChoice() {
+            freeChoiceMessage.classList.add('active');
+            // Ativar todos os montes que têm cartas e um botão
+            for (const categoryIndex in categories) {
+                const category = categories[categoryIndex];
+                const deckContainer = document.getElementById(`deck-container-${categoryIndex}`);
+                const drawButton = document.getElementById(`draw-card-${categoryIndex}`);
+
+                // Apenas ativa se o deck tiver cartas e não for o Free Choice em si
+                if (parseInt(categoryIndex) !== freeChoiceIndex && category.cards && category.cards.length > 0 && deckContainer && drawButton) {
+                    deckContainer.classList.add('active');
+                    document.getElementById(`card-display-${categoryIndex}`).classList.add('active');
+                    drawButton.classList.add('active');
+                    drawButton.disabled = false; // Habilita o botão para seleção
+                }
+            }
+        }
+        
+        // Função para ativar um monte de cartas específico (após rolar o D10)
+        function activateDeck(categoryIndex) {
+            resetGameState(); // Garante um estado limpo antes de ativar um novo deck
+
+            // Se for Free Choice, trata separadamente
+            if (categoryIndex === freeChoiceIndex) {
+                activateFreeChoice();
+                return;
+            }
+            
+            // Verifica se a categoria tem cartas e um elemento de UI correspondente
+            const category = categories[categoryIndex];
+            const deckContainer = document.getElementById(`deck-container-${categoryIndex}`);
+            const drawButton = document.getElementById(`draw-card-${categoryIndex}`);
+
+            // Apenas ativa se o deck tiver cartas
+            if (category && category.cards && category.cards.length > 0 && deckContainer && drawButton) {
+                deckContainer.classList.add('active');
+                document.getElementById(`card-display-${categoryIndex}`).classList.add('active');
+                drawButton.classList.add('active');
+                drawButton.disabled = false; // Habilita o botão específico
+                activeCategory = categoryIndex;
+            } else {
+                // Se a categoria selecionada não tiver cartas ou UI, informa e re-habilita o D10
+                d10Result.textContent += " (Deck vazio ou inválido. Role o D10 novamente)";
+                document.getElementById('roll-d10').disabled = false;
+            }
+        }
+        
+        // Roll D10 function
+        document.getElementById('roll-d10').addEventListener('click', function() {
+            if (this.disabled) return; // Previne clique duplo no botão de rolar
+
+            resetGameState(); // Reseta o jogo ao rolar o D10 novamente
+            this.disabled = true; // Desabilita o botão de rolar imediatamente
+
+            d10Result.textContent = '';
+            d10Shape.classList.add('rolling');
+            
+            d10CurrentValue = Math.floor(Math.random() * 10);
+            updateD10Value(d10CurrentValue);
+            
+            setTimeout(function() {
+                d10Shape.classList.remove('rolling');
+                d10Result.textContent = getD10ResultText(d10CurrentValue);
+                
+                activateDeck(d10CurrentValue); // Ativa o monte de cartas correspondente
+            }, 2000);
+        });
+        
+        // Função para mostrar a carta em destaque
+        function showHighlightCard(cardUrl, categoryName) {
+            highlightCardTitle.textContent = `Carta Puxada: ${categoryName}`;
+            highlightCardImage.src = cardUrl;
+            highlightCardImage.alt = `Carta de ${categoryName}`;
+            
+            const img = new Image();
+            img.onload = function() {
+                highlightCardArea.classList.add('visible');
+                // Opcional: rolar a página para a carta em destaque
+                highlightCardArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            };
+            img.onerror = function() {
+                console.error(`Falha ao carregar imagem para destaque: ${cardUrl}`);
+                highlightCardTitle.textContent = `Erro ao carregar carta de ${categoryName}`;
+                highlightCardImage.src = ''; // Limpa a imagem para não mostrar ícone de quebra
+                highlightCardArea.classList.add('visible'); // Ainda mostra a área com a mensagem de erro
+            };
+            img.src = cardUrl;
+        }
+
+        // Função para esconder a carta em destaque
+        function hideHighlightCard() {
+            highlightCardArea.classList.remove('visible');
+            highlightCardImage.src = ''; // Limpa a imagem
+            highlightCardTitle.textContent = ''; // Limpa o título
+        }
+
+        // Listener para o botão de fechar destaque
+        closeHighlightButton.addEventListener('click', function() {
+            hideHighlightCard();
+            resetGameState(); // Resetar o jogo ao fechar a carta em destaque
+        });
+
+
+        // Configurar os botões de puxar carta
+        for (const categoryIndex in categories) {
+            const drawButton = document.getElementById(`draw-card-${categoryIndex}`);
+            const cardDisplay = document.getElementById(`card-display-${categoryIndex}`);
+            const cardFront = document.getElementById(`card-front-${categoryIndex}`);
+            const cardImageSmall = document.getElementById(`card-image-${categoryIndex}`);
+
+
+            if (drawButton) {
+                drawButton.addEventListener('click', function() {
+                    // IMPEDE múltiplas puxadas se já estiver no processo
+                    if (isDrawingCard) return; 
+                    isDrawingCard = true; // Define a flag para "está puxando"
+                    
+                    // Desabilita TODOS os botões de puxar e o botão de rolar D10
+                    document.querySelectorAll('.draw-button').forEach(btn => btn.disabled = true);
+                    document.getElementById('roll-d10').disabled = true;
+
+                    const cardUrl = getNextCard(categoryIndex);
+                    
+                    if (cardUrl) {
+                        cardDisplay.classList.add('flipped'); // Inicia a animação de flip da carta pequena
+                        
+                        // Define a imagem da carta pequena (para o flip)
+                        cardImageSmall.src = cardUrl; 
+                        cardImageSmall.alt = `Carta de ${categories[categoryIndex].name}`;
+
+                        // Espera a animação de flip (0.6s) antes de mostrar a carta em destaque
+                        setTimeout(() => {
+                            showHighlightCard(cardUrl, categories[categoryIndex].name); // Mostra a carta grande
+                            isDrawingCard = false; // Libera a puxada após a exibição
+                        }, 600); // Tempo correspondente à transição CSS do flip
+                        
+                    } else {
+                        // Se não houver URL da carta (deck vazio, embora já tenha reembaralhado)
+                        console.warn(`Nenhuma carta para puxar na categoria ${categories[categoryIndex].name}.`);
+                        isDrawingCard = false; // Reseta a flag
+                        resetGameState(); // Reseta o estado do jogo completamente
+                    }
+                });
+            }
+        }
+        
+        // Inicializar o D10 com o valor inicial
+        updateD10Value(d10CurrentValue);
+        
+        // Inicializar os decks embaralhados
+        initializeShuffledDecks();
+        
+        // Chamar resetGameState no carregamento para garantir o estado inicial correto
+        resetGameState();
+    </script>
+</body>
+</html>
