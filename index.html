@@ -662,6 +662,21 @@
                         <button class="draw-button" id="draw-card-8">Puxar Carta</button>
                         <div class="card-counter" id="counter-8"></div>
                     </div>
+
+                    <div class="card-deck-container" id="deck-container-9">
+                        <div class="card-deck-title">Professions</div>
+                        <div class="card-display card-stack" id="card-display-9">
+                            <div class="card-back">
+                                <div class="card-back-icon">💼</div>
+                                <div class="card-back-text">Professions</div>
+                            </div>
+                            <div class="card-front" id="card-front-9">
+                                <img class="card-image" id="card-image-9" src="" alt="Carta de Professions">
+                            </div>
+                        </div>
+                        <button class="draw-button" id="draw-card-9">Puxar Carta</button>
+                        <div class="card-counter" id="counter-9"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -763,10 +778,15 @@
                     'authors/16.jpg', 'authors/17.jpg', 'authors/18.jpg', 'authors/19.jpg', 'authors/20.jpg'
                 ]
             },
-            9: { // Professions (maleta) - Este deck não tem cards no seu exemplo, então não seria ativado para puxada.
+            9: { // Professions (maleta) - Este deck foi preenchido agora!
                 name: 'Professions',
                 icon: '💼',
-                cards: []
+                cards: [
+                    'professions/01.jpg', 'professions/02.jpg', 'professions/03.jpg', 'professions/04.jpg', 'professions/05.jpg',
+                    'professions/06.jpg', 'professions/07.jpg', 'professions/08.jpg', 'professions/09.jpg', 'professions/10.jpg',
+                    'professions/11.jpg', 'professions/12.jpg', 'professions/13.jpg', 'professions/14.jpg', 'professions/15.jpg',
+                    'professions/16.jpg', 'professions/17.jpg', 'professions/18.jpg', 'professions/19.jpg', 'professions/20.jpg'
+                ]
             }
         };
         
@@ -812,7 +832,7 @@
                     currentCardIndices[categoryIndex] = 0; // Inicia o índice em 0
                     updateCardCounter(categoryIndex);
                 } else {
-                    // Para categorias sem cartas (ex: Professions), inicializa deck vazio para evitar erros
+                    // Para categorias sem cartas (ex: Free Choice), inicializa deck vazio para evitar erros
                     shuffledDecks[categoryIndex] = [];
                     currentCardIndices[categoryIndex] = 0;
                     updateCardCounter(categoryIndex);
@@ -852,15 +872,7 @@
             const counterElement = document.getElementById(`counter-${categoryIndex}`);
             if (counterElement) {
                 const totalCards = categories[categoryIndex].cards ? categories[categoryIndex].cards.length : 0;
-                const remainingCards = (shuffledDecks[categoryIndex] ? shuffledDecks[categoryIndex].length : 0) - currentCardIndices[categoryIndex]; // Bug fix: remaining cards logic
                 
-                // Exibe "X de Y" se ainda houver cartas no deck original, ou apenas o total.
-                // Ajustado para mostrar "X/Y" de cartas no deck.
-                // if (totalCards > 0) {
-                //     counterElement.textContent = `Cartas: ${currentCardIndices[categoryIndex]}/${shuffledDecks[categoryIndex].length}`;
-                // } else {
-                //     counterElement.textContent = `Cartas: 0`; // Deck vazio
-                // }
                 // Correção: o contador deve mostrar quantas cartas faltam no deck embaralhado.
                 counterElement.textContent = `Cartas: ${shuffledDecks[categoryIndex].length - currentCardIndices[categoryIndex]} / ${categories[categoryIndex].cards.length}`;
             }
