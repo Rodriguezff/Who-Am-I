@@ -14,7 +14,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden; /* Adicionado para evitar scroll horizontal em caso de elementos fora da tela */
+            overflow-x: hidden;
         }
         
         .container {
@@ -67,7 +67,7 @@
             width: 220px;
             margin-bottom: 20px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background-color: #fff; /* Adicionado um fundo para o container do deck */
+            background-color: #fff;
             border-radius: 15px;
             padding: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -76,7 +76,7 @@
         .card-deck-container.active {
             transform: translateY(-10px) scale(1.05);
             z-index: 10;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8); /* Destaque amarelo para o deck ativo */
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
         }
         
         .card-deck-title {
@@ -94,7 +94,7 @@
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
             overflow: hidden;
-            background-color: #f8f9fa; /* Adicionado cor de fundo para a área de exibição da carta */
+            background-color: #f8f9fa;
         }
         
         .card-display.active {
@@ -111,10 +111,10 @@
             align-items: center;
             color: white;
             border-radius: 15px;
-            position: absolute; /* Adicionado */
-            top: 0; left: 0; /* Adicionado */
-            backface-visibility: hidden; /* Adicionado */
-            transition: transform 0.6s; /* Adicionado para o flip */
+            position: absolute;
+            top: 0; left: 0;
+            backface-visibility: hidden;
+            transition: transform 0.6s;
         }
         
         .card-front {
@@ -124,22 +124,20 @@
             top: 0;
             left: 0;
             background-color: white;
-            display: flex; /* Alterado de 'none' para 'flex' para gerenciar com transform */
+            display: flex;
             justify-content: center;
             align-items: center;
             border-radius: 15px;
             overflow: hidden;
-            backface-visibility: hidden; /* Adicionado */
-            transform: rotateY(180deg); /* Escondida por padrão */
-            transition: transform 0.6s; /* Adicionado para o flip */
+            backface-visibility: hidden;
+            transform: rotateY(180deg);
+            transition: transform 0.6s;
         }
         
-        /* A classe 'visible' em card-front agora gira a carta */
         .card-front.visible {
             transform: rotateY(0deg);
         }
 
-        /* E a classe 'flipped' no card-display controla o flip */
         .card-display.flipped .card-back {
             transform: rotateY(180deg);
         }
@@ -177,13 +175,13 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
             position: relative;
             overflow: hidden;
-            display: flex; /* Adicionado para centralizar o dado */
-            justify-content: center; /* Adicionado para centralizar o dado */
-            align-items: center; /* Adicionado para centralizar o dado */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         .dice {
-            position: absolute; /* Alterado para absoluto para centralizar o shape */
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
@@ -201,21 +199,17 @@
             transition: transform 0.1s;
         }
         
-        .d10-shape {
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        .d12-shape { /* Changed from d10-shape */
+            clip-path: polygon(50% 0%, 86.6% 25%, 86.6% 75%, 50% 100%, 13.4% 75%, 13.4% 25%);
             background-color: #000;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white; /* Cor do ícone do D10 */
-            font-size: 48px; /* Tamanho do ícone do D10 */
+            color: white;
+            font-size: 48px;
             font-weight: bold;
             text-shadow: 0 0 10px #ffcc00;
             user-select: none;
-        }
-        
-        .dice-value {
-             /* Removido, o estilo foi movido para .d10-shape */
         }
         
         .roll-button {
@@ -234,7 +228,7 @@
             background-color: #1a2530;
         }
 
-        .roll-button:disabled { /* Estilo para botão desabilitado */
+        .roll-button:disabled {
             background-color: #cccccc;
             cursor: not-allowed;
             box-shadow: none;
@@ -264,12 +258,12 @@
             background-color: #219653;
         }
 
-        .draw-button:disabled { /* Estilo para botão desabilitado */
+        .draw-button:disabled {
             background-color: #cccccc;
             cursor: not-allowed;
             box-shadow: none;
             transform: none;
-            opacity: 0.5; /* Mantém a opacidade mesmo que active */
+            opacity: 0.5;
         }
         
         .result {
@@ -281,7 +275,6 @@
             min-height: 30px;
         }
         
-        /* Estilo para o ícone de balão de localização */
         .location-balloon {
             width: 36px;
             height: 36px;
@@ -317,34 +310,32 @@
             left: 11px;
         }
         
-        /* Efeito de monte de cartas */
         .card-stack {
             position: relative;
         }
         
-        /* Ajustei a posição das "cópias" para ficarem mais próximas e não cobrirem o conteúdo */
         .card-stack::before,
         .card-stack::after {
             content: '';
             position: absolute;
-            width: 95%; /* Ligeiramente menor */
-            height: 95%; /* Ligeiramente menor */
+            width: 95%;
+            height: 95%;
             background-color: #2c3e50;
             border-radius: 15px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.1); /* Sombra mais suave */
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
             z-index: -1;
         }
         
         .card-stack::before {
-            top: -2px; /* Menos deslocamento */
+            top: -2px;
             left: -2px;
-            transform: rotate(-2deg); /* Rotação suave */
+            transform: rotate(-2deg);
         }
         
         .card-stack::after {
-            top: 2px; /* Menos deslocamento */
+            top: 2px;
             left: 2px;
-            transform: rotate(2deg); /* Rotação suave */
+            transform: rotate(2deg);
         }
         
         .free-choice-message {
@@ -386,7 +377,7 @@
                 height: 200px;
             }
             
-            .d10-shape {
+            .d12-shape { /* Changed from d10-shape */
                 font-size: 36px;
             }
             
@@ -443,7 +434,6 @@
             font-size: 18px;
         }
 
-        /* --- Novo CSS para a Carta em Destaque --- */
         .highlight-card-area {
             background-color: #e0e0e0;
             border-radius: 20px;
@@ -454,13 +444,13 @@
             flex-direction: column;
             align-items: center;
             gap: 15px;
-            min-height: 400px; /* Altura mínima para não colapsar */
-            width: min(400px, 90vw); /* Largura flexível, max 400px */
-            justify-content: center; /* Centraliza conteúdo verticalmente */
+            min-height: 400px;
+            width: min(400px, 90vw);
+            justify-content: center;
             opacity: 0;
             transform: translateY(-20px);
             transition: opacity 0.5s ease, transform 0.5s ease;
-            position: relative; /* Para posicionar o botão de fechar */
+            position: relative;
         }
 
         .highlight-card-area.visible {
@@ -478,16 +468,16 @@
 
         .highlight-card-image-container {
             width: 100%;
-            height: 100%; /* Ocupa o restante do espaço */
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-grow: 1; /* Permite que ocupe o espaço disponível */
+            flex-grow: 1;
         }
 
         .highlight-card-image {
-            max-width: 90%; /* Ajusta para um pouco de margem */
-            max-height: 90%; /* Ajusta para um pouco de margem */
+            max-width: 90%;
+            max-height: 90%;
             object-fit: contain;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
@@ -502,14 +492,12 @@
             font-size: 0.9em;
             cursor: pointer;
             transition: background-color 0.3s;
-            margin-top: 10px; /* Espaço abaixo da carta */
+            margin-top: 10px;
         }
 
         .close-highlight-button:hover {
             background-color: #c82333;
         }
-        /* --- Fim do Novo CSS --- */
-
     </style>
 </head>
 <body>
@@ -519,16 +507,11 @@
         <div class="game-area">
             <div class="dice-section">
                 <div class="dice-container">
-                    <div class="dice-title">D10 - Categorias</div>
-                    <div class="canvas-container">
+                    <div class="dice-title">D12 - Categorias</div> <div class="canvas-container">
                         <div class="dice">
-                            <div id="d10-shape" class="dice-shape d10-shape">
-                                <span id="d10-value">🎵</span> </div>
-                        </div>
+                            <div id="d12-shape" class="dice-shape d12-shape"> <span id="d12-value">🎵</span> </div> </div>
                     </div>
-                    <button class="roll-button" id="roll-d10">Rolar D10</button>
-                    <div class="result" id="d10-result"></div>
-                </div>
+                    <button class="roll-button" id="roll-d12">Rolar D12</button> <div class="result" id="d12-result"></div> </div>
             </div>
 
             <div class="highlight-card-area" id="highlight-card-area">
@@ -539,19 +522,19 @@
                 <button class="close-highlight-button" id="close-highlight-button">Fechar Destaque</button>
             </div>
             <div class="cards-section">
-                <div class="instructions">Role o D10 para selecionar uma categoria e puxar uma carta do monte correspondente</div>
+                <div class="instructions">Role o D12 para selecionar uma categoria e puxar uma carta do monte correspondente</div>
                 <div class="free-choice-message" id="free-choice-message">ESCOLHA LIVRE! Selecione qualquer monte de cartas</div>
                 
                 <div class="card-decks">
                     <div class="card-deck-container" id="deck-container-0">
-                        <div class="card-deck-title">Music</div>
+                        <div class="card-deck-title">music</div>
                         <div class="card-display card-stack" id="card-display-0">
                             <div class="card-back">
                                 <div class="card-back-icon">🎵</div>
-                                <div class="card-back-text">Music</div>
+                                <div class="card-back-text">music</div>
                             </div>
                             <div class="card-front" id="card-front-0">
-                                <img class="card-image" id="card-image-0" src="" alt="Carta de Music">
+                                <img class="card-image" id="card-image-0" src="" alt="Carta de music">
                             </div>
                         </div>
                         <button class="draw-button" id="draw-card-0">Puxar Carta</button>
@@ -559,14 +542,14 @@
                     </div>
                     
                     <div class="card-deck-container" id="deck-container-1">
-                        <div class="card-deck-title">Sports</div>
+                        <div class="card-deck-title">sports</div>
                         <div class="card-display card-stack" id="card-display-1">
                             <div class="card-back">
                                 <div class="card-back-icon">🏆</div>
-                                <div class="card-back-text">Sports</div>
+                                <div class="card-back-text">sports</div>
                             </div>
                             <div class="card-front" id="card-front-1">
-                                <img class="card-image" id="card-image-1" src="" alt="Carta de Sports">
+                                <img class="card-image" id="card-image-1" src="" alt="Carta de sports">
                             </div>
                         </div>
                         <button class="draw-button" id="draw-card-1">Puxar Carta</button>
@@ -574,14 +557,14 @@
                     </div>
                     
                     <div class="card-deck-container" id="deck-container-2">
-                        <div class="card-deck-title">School</div>
+                        <div class="card-deck-title">school</div>
                         <div class="card-display card-stack" id="card-display-2">
                             <div class="card-back">
                                 <div class="card-back-icon">🎓</div>
-                                <div class="card-back-text">School</div>
+                                <div class="card-back-text">school</div>
                             </div>
                             <div class="card-front" id="card-front-2">
-                                <img class="card-image" id="card-image-2" src="" alt="Carta de School">
+                                <img class="card-image" id="card-image-2" src="" alt="Carta de school">
                             </div>
                         </div>
                         <button class="draw-button" id="draw-card-2">Puxar Carta</button>
@@ -589,14 +572,14 @@
                     </div>
                     
                     <div class="card-deck-container" id="deck-container-3">
-                        <div class="card-deck-title">Objects</div>
+                        <div class="card-deck-title">objects</div>
                         <div class="card-display card-stack" id="card-display-3">
                             <div class="card-back">
                                 <div class="card-back-icon">📢</div>
-                                <div class="card-back-text">Objects</div>
+                                <div class="card-back-text">objects</div>
                             </div>
                             <div class="card-front" id="card-front-3">
-                                <img class="card-image" id="card-image-3" src="" alt="Carta de Objects">
+                                <img class="card-image" id="card-image-3" src="" alt="Carta de objects">
                             </div>
                         </div>
                         <button class="draw-button" id="draw-card-3">Puxar Carta</button>
@@ -604,14 +587,14 @@
                     </div>
                     
                     <div class="card-deck-container" id="deck-container-4">
-                        <div class="card-deck-title">Movies</div>
+                        <div class="card-deck-title">movies</div>
                         <div class="card-display card-stack" id="card-display-4">
                             <div class="card-back">
                                 <div class="card-back-icon">🎥</div>
-                                <div class="card-back-text">Movies</div>
+                                <div class="card-back-text">movies</div>
                             </div>
                             <div class="card-front" id="card-front-4">
-                                <img class="card-image" id="card-image-4" src="" alt="Carta de Movies">
+                                <img class="card-image" id="card-image-4" src="" alt="Carta de movies">
                             </div>
                         </div>
                         <button class="draw-button" id="draw-card-4">Puxar Carta</button>
@@ -619,29 +602,43 @@
                     </div>
                     
                     <div class="card-deck-container" id="deck-container-5">
-                        <div class="card-deck-title">TV</div>
+                        <div class="card-deck-title">tv</div>
                         <div class="card-display card-stack" id="card-display-5">
                             <div class="card-back">
                                 <div class="card-back-icon">📺</div>
-                                <div class="card-back-text">TV</div>
+                                <div class="card-back-text">tv</div>
                             </div>
                             <div class="card-front" id="card-front-5">
-                                <img class="card-image" id="card-image-5" src="" alt="Carta de TV">
+                                <img class="card-image" id="card-image-5" src="" alt="Carta de tv">
                             </div>
                         </div>
                         <button class="draw-button" id="draw-card-5">Puxar Carta</button>
                         <div class="card-counter" id="counter-5"></div>
                     </div>
-                    
+
+                    <div class="card-deck-container" id="deck-container-6">
+                        <div class="card-deck-title">animals</div>
+                        <div class="card-display card-stack" id="card-display-6">
+                            <div class="card-back">
+                                <div class="card-back-icon">🐾</div>
+                                <div class="card-back-text">animals</div>
+                            </div>
+                            <div class="card-front" id="card-front-6">
+                                <img class="card-image" id="card-image-6" src="" alt="Carta de animals">
+                            </div>
+                        </div>
+                        <button class="draw-button" id="draw-card-6">Puxar Carta</button>
+                        <div class="card-counter" id="counter-6"></div>
+                    </div>
                     <div class="card-deck-container" id="deck-container-7">
-                        <div class="card-deck-title">Places</div>
+                        <div class="card-deck-title">places</div>
                         <div class="card-display card-stack" id="card-display-7">
                             <div class="card-back">
                                 <div class="location-balloon"></div>
-                                <div class="card-back-text">Places</div>
+                                <div class="card-back-text">places</div>
                             </div>
                             <div class="card-front" id="card-front-7">
-                                <img class="card-image" id="card-image-7" src="" alt="Carta de Places">
+                                <img class="card-image" id="card-image-7" src="" alt="Carta de places">
                             </div>
                         </div>
                         <button class="draw-button" id="draw-card-7">Puxar Carta</button>
@@ -649,14 +646,14 @@
                     </div>
                     
                     <div class="card-deck-container" id="deck-container-8">
-                        <div class="card-deck-title">Authors</div>
+                        <div class="card-deck-title">authors</div>
                         <div class="card-display card-stack" id="card-display-8">
                             <div class="card-back">
                                 <div class="card-back-icon">📕</div>
-                                <div class="card-back-text">Authors</div>
+                                <div class="card-back-text">authors</div>
                             </div>
                             <div class="card-front" id="card-front-8">
-                                <img class="card-image" id="card-image-8" src="" alt="Carta de Authors">
+                                <img class="card-image" id="card-image-8" src="" alt="Carta de authors">
                             </div>
                         </div>
                         <button class="draw-button" id="draw-card-8">Puxar Carta</button>
@@ -664,37 +661,37 @@
                     </div>
 
                     <div class="card-deck-container" id="deck-container-9">
-                        <div class="card-deck-title">Professions</div>
+                        <div class="card-deck-title">professions</div>
                         <div class="card-display card-stack" id="card-display-9">
                             <div class="card-back">
                                 <div class="card-back-icon">💼</div>
-                                <div class="card-back-text">Professions</div>
+                                <div class="card-back-text">professions</div>
                             </div>
                             <div class="card-front" id="card-front-9">
-                                <img class="card-image" id="card-image-9" src="" alt="Carta de Professions">
+                                <img class="card-image" id="card-image-9" src="" alt="Carta de professions">
                             </div>
                         </div>
                         <button class="draw-button" id="draw-card-9">Puxar Carta</button>
                         <div class="card-counter" id="counter-9"></div>
                     </div>
-                </div>
+                    </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Array de ícones para o D10
-        const d10Icons = ['🎵', '🏆', '🎓', '📢', '🎥', '📺', '❓', '📍', '📕', '💼'];
+        // Array de ícones para o D12
+        const d12Icons = ['🎵', '🏆', '🎓', '📢', '🎥', '📺', '🐾', '📍', '📕', '💼', '❓', '❓']; // Dois '❓' para Free Choice
         
-        // Índice do ícone de localização e free choice
+        // Índice do ícone de localização
         const locationIconIndex = 7;
-        const freeChoiceIndex = 6;
-        const authorsIconIndex = 8;
+        // Índices para as categorias Free Choice
+        const freeChoiceIndexes = [10, 11]; // Agora temos dois índices para Free Choice
         
         // Categorias e seus respectivos cards
         const categories = {
-            0: { // Music (nota musical)
-                name: 'Music',
+            0: { // music (nota musical)
+                name: 'music',
                 icon: '🎵',
                 cards: [
                     'music/01.jpg', 'music/02.jpg', 'music/03.jpg', 'music/04.jpg', 'music/05.jpg',
@@ -704,8 +701,8 @@
                     'music/21.jpg', 'music/22.jpg', 'music/23.jpg', 'music/24.jpg', 'music/25.jpg'
                 ]
             },
-            1: { // Sports (troféu)
-                name: 'Sports',
+            1: { // sports (troféu)
+                name: 'sports',
                 icon: '🏆',
                 cards: [
                     'sports/01.jpg', 'sports/02.jpg', 'sports/03.jpg', 'sports/04.jpg', 'sports/05.jpg',
@@ -715,8 +712,8 @@
                     'sports/21.jpg', 'sports/22.jpg', 'sports/23.jpg', 'sports/24.jpg', 'sports/25.jpg'
                 ]
             },
-            2: { // School (chapéu de formatura)
-                name: 'School',
+            2: { // school (chapéu de formatura)
+                name: 'school',
                 icon: '🎓',
                 cards: [
                     'school/01.jpg', 'school/02.jpg', 'school/03.jpg', 'school/04.jpg', 'school/05.jpg',
@@ -726,8 +723,8 @@
                     'school/21.jpg', 'school/22.jpg', 'school/23.jpg', 'school/24.jpg', 'school/25.jpg'
                 ]
             },
-            3: { // Objects (megafone)
-                name: 'Objects',
+            3: { // objects (megafone)
+                name: 'objects',
                 icon: '📢',
                 cards: [
                     'objects/01.jpg', 'objects/02.jpg', 'objects/03.jpg', 'objects/04.jpg', 'objects/05.jpg',
@@ -737,8 +734,8 @@
                     'objects/21.jpg', 'objects/22.jpg', 'objects/23.jpg', 'objects/24.jpg', 'objects/25.jpg'
                 ]
             },
-            4: { // Movies (câmera de cinema)
-                name: 'Movies',
+            4: { // movies (câmera de cinema)
+                name: 'movies',
                 icon: '🎥',
                 cards: [
                     'movies/01.jpg', 'movies/02.jpg', 'movies/03.jpg', 'movies/04.jpg', 'movies/05.jpg',
@@ -748,8 +745,8 @@
                     'movies/21.jpg', 'movies/22.jpg', 'movies/23.jpg', 'movies/24.jpg', 'movies/25.jpg'
                 ]
             },
-            5: { // TV (televisão)
-                name: 'TV',
+            5: { // tv (televisão)
+                name: 'tv',
                 icon: '📺',
                 cards: [
                     'tv/01.jpg', 'tv/02.jpg', 'tv/03.jpg', 'tv/04.jpg', 'tv/05.jpg',
@@ -759,13 +756,19 @@
                     'tv/21.jpg', 'tv/22.jpg', 'tv/23.jpg', 'tv/24.jpg', 'tv/25.jpg'
                 ]
             },
-            6: { // Free Choice (ponto de interrogação)
-                name: 'Free Choice',
-                icon: '❓',
-                cards: []
+            6: { // animals (Patinha) - Added
+                name: 'animals',
+                icon: '🐾',
+                cards: [
+                    'animals/01.jpg', 'animals/02.jpg', 'animals/03.jpg', 'animals/04.jpg', 'animals/05.jpg',
+                    'animals/06.jpg', 'animals/07.jpg', 'animals/08.jpg', 'animals/09.jpg', 'animals/10.jpg',
+                    'animals/11.jpg', 'animals/12.jpg', 'animals/13.jpg', 'animals/14.jpg', 'animals/15.jpg',
+                    'animals/16.jpg', 'animals/17.jpg', 'animals/18.jpg', 'animals/19.jpg', 'animals/20.jpg',
+                    'animals/21.jpg', 'animals/22.jpg', 'animals/23.jpg', 'animals/24.jpg', 'animals/25.jpg'
+                ]
             },
-            7: { // Places (balão de localização)
-                name: 'Places',
+            7: { // places (balão de localização)
+                name: 'places',
                 icon: '📍',
                 cards: [
                     'places/01.jpg', 'places/02.jpg', 'places/03.jpg', 'places/04.jpg', 'places/05.jpg',
@@ -775,8 +778,8 @@
                     'places/21.jpg', 'places/22.jpg', 'places/23.jpg', 'places/24.jpg', 'places/25.jpg'
                 ]
             },
-            8: { // Authors (livro vermelho)
-                name: 'Authors',
+            8: { // authors (livro vermelho)
+                name: 'authors',
                 icon: '📕',
                 cards: [
                     'authors/01.jpg', 'authors/02.jpg', 'authors/03.jpg', 'authors/04.jpg', 'authors/05.jpg',
@@ -786,8 +789,8 @@
                     'authors/21.jpg', 'authors/22.jpg', 'authors/23.jpg', 'authors/24.jpg', 'authors/25.jpg'
                 ]
             },
-            9: { // Professions (maleta) - Este deck foi preenchido agora!
-                name: 'Professions',
+            9: { // professions (maleta)
+                name: 'professions',
                 icon: '💼',
                 cards: [
                     'professions/01.jpg', 'professions/02.jpg', 'professions/03.jpg', 'professions/04.jpg', 'professions/05.jpg',
@@ -796,13 +799,23 @@
                     'professions/16.jpg', 'professions/17.jpg', 'professions/18.jpg', 'professions/19.jpg', 'professions/20.jpg',
                     'professions/21.jpg', 'professions/22.jpg', 'professions/23.jpg', 'professions/24.jpg', 'professions/25.jpg'
                 ]
+            },
+            10: { // Free Choice 1
+                name: 'free choice',
+                icon: '❓',
+                cards: [] 
+            },
+            11: { // Free Choice 2
+                name: 'free choice',
+                icon: '❓',
+                cards: []
             }
         };
         
         // DOM elements
-        const d10Shape = document.getElementById('d10-shape');
-        const d10Value = document.getElementById('d10-value');
-        const d10Result = document.getElementById('d10-result');
+        const d12Shape = document.getElementById('d12-shape');
+        const d12Value = document.getElementById('d12-value');
+        const d12Result = document.getElementById('d12-result');
         const freeChoiceMessage = document.getElementById('free-choice-message');
 
         // Novos elementos para a carta em destaque
@@ -812,9 +825,9 @@
         const closeHighlightButton = document.getElementById('close-highlight-button');
         
         // Initial values
-        let d10CurrentValue = 0;
+        let d12CurrentValue = 0;
         let activeCategory = null;
-        let isDrawingCard = false; // Adicionada flag para evitar cliques múltiplos
+        let isDrawingCard = false;
         
         // Armazenar os decks embaralhados para cada categoria
         const shuffledDecks = {};
@@ -835,13 +848,12 @@
         // Função para inicializar os decks embaralhados
         function initializeShuffledDecks() {
             for (const categoryIndex in categories) {
-                // Apenas embaralha decks que realmente têm cartas
                 if (categories[categoryIndex].cards && categories[categoryIndex].cards.length > 0) {
                     shuffledDecks[categoryIndex] = shuffleArray(categories[categoryIndex].cards);
-                    currentCardIndices[categoryIndex] = 0; // Inicia o índice em 0
+                    currentCardIndices[categoryIndex] = 0;
                     updateCardCounter(categoryIndex);
                 } else {
-                    // Para categorias sem cartas (ex: Free Choice), inicializa deck vazio para evitar erros
+                    // Para Free Choice e outras categorias sem cartas físicas no deck
                     shuffledDecks[categoryIndex] = [];
                     currentCardIndices[categoryIndex] = 0;
                     updateCardCounter(categoryIndex);
@@ -858,7 +870,6 @@
             
             let index = currentCardIndices[categoryIndex];
             
-            // Se chegou ao fim do deck, embaralhar novamente e resetar o índice
             if (index >= shuffledDecks[categoryIndex].length) {
                 console.log(`Reembaralhando o deck de ${categories[categoryIndex].name}.`);
                 shuffledDecks[categoryIndex] = shuffleArray(categories[categoryIndex].cards);
@@ -866,11 +877,9 @@
                 currentCardIndices[categoryIndex] = 0;
             }
             
-            // Obter a carta e incrementar o índice
             const card = shuffledDecks[categoryIndex][index];
             currentCardIndices[categoryIndex]++;
             
-            // Atualizar o contador de cartas
             updateCardCounter(categoryIndex);
             
             return card;
@@ -881,29 +890,35 @@
             const counterElement = document.getElementById(`counter-${categoryIndex}`);
             if (counterElement) {
                 const totalCards = categories[categoryIndex].cards ? categories[categoryIndex].cards.length : 0;
-                
-                // Correção: o contador deve mostrar quantas cartas faltam no deck embaralhado.
-                counterElement.textContent = `Cartas: ${shuffledDecks[categoryIndex].length - currentCardIndices[categoryIndex]} / ${categories[categoryIndex].cards.length}`;
+                if (totalCards > 0) {
+                    const remainingInShuffled = totalCards - currentCardIndices[categoryIndex];
+                    counterElement.textContent = `Cartas: ${remainingInShuffled} / ${totalCards}`;
+                } else {
+                    counterElement.textContent = `Cartas: N/A`; // Para Free Choice (que não tem deck físico)
+                }
             }
         }
         
-        // Função para atualizar o valor do D10
-        function updateD10Value(value) {
+        // Função para atualizar o valor do D12
+        function updateD12Value(value) {
             if (value === locationIconIndex) {
-                d10Value.innerHTML = '<div class="location-balloon"></div>';
+                d12Value.innerHTML = '<div class="location-balloon"></div>';
             } else {
-                d10Value.textContent = d10Icons[value];
+                d12Value.textContent = d12Icons[value];
             }
         }
         
-        // Função para obter o texto do resultado do D10
-        function getD10ResultText(value) {
-            return `Resultado: ${categories[value].name}`;
+        // Função para obter o texto do resultado do D12
+        function getD12ResultText(value) {
+            if (freeChoiceIndexes.includes(value)) {
+                return `Resultado: ESCOLHA LIVRE!`;
+            }
+            return `Resultado: ${categories[value].name.toUpperCase()}`; // Mantém o texto do resultado em maiúsculas para clareza
         }
         
         // Função para resetar todos os botões de puxar e o estado visual do jogo
         function resetGameState() {
-            document.getElementById('roll-d10').disabled = false; // Re-habilita o botão de rolar D10
+            document.getElementById('roll-d12').disabled = false; // Changed from roll-d10
             
             document.querySelectorAll('.card-deck-container').forEach(container => {
                 container.classList.remove('active');
@@ -911,111 +926,109 @@
             
             document.querySelectorAll('.card-display').forEach(display => {
                 display.classList.remove('active');
-                display.classList.remove('flipped'); // Esconde a carta pequena virada
+                display.classList.remove('flipped');
             });
             
             document.querySelectorAll('.draw-button').forEach(button => {
                 button.classList.remove('active');
-                button.disabled = true; // Garante que todos estejam desabilitados
+                button.disabled = true;
             });
             
             document.querySelectorAll('.card-front').forEach(front => {
-                // Limpa a imagem para garantir que não apareça a imagem anterior em reembaralhamento
-                document.getElementById(front.id.replace('card-front-', 'card-image-')).src = ''; 
+                const img = document.getElementById(front.id.replace('card-front-', 'card-image-'));
+                if (img) img.src = ''; 
             });
             
-            freeChoiceMessage.classList.remove('active'); // Esconde a mensagem de escolha livre
-            activeCategory = null; // Reseta a categoria ativa
+            freeChoiceMessage.classList.remove('active');
+            activeCategory = null;
             
-            hideHighlightCard(); // Esconde a carta em destaque
+            hideHighlightCard();
         }
 
         // Função para ativar o modo Free Choice
-        function activateFreeChoice() {
+        function activateFreeChoiceMode() {
             freeChoiceMessage.classList.add('active');
-            // Ativar todos os montes que têm cartas e um botão
             for (const categoryIndex in categories) {
-                const category = categories[categoryIndex];
-                const deckContainer = document.getElementById(`deck-container-${categoryIndex}`);
-                const drawButton = document.getElementById(`draw-card-${categoryIndex}`);
+                // Apenas ativa decks que NÃO SÃO Free Choice e que têm cartas
+                if (!freeChoiceIndexes.includes(parseInt(categoryIndex))) { 
+                    const category = categories[categoryIndex];
+                    const deckContainer = document.getElementById(`deck-container-${categoryIndex}`);
+                    const drawButton = document.getElementById(`draw-card-${categoryIndex}`);
 
-                // Apenas ativa se o deck tiver cartas e não for o Free Choice em si
-                if (parseInt(categoryIndex) !== freeChoiceIndex && category.cards && category.cards.length > 0 && deckContainer && drawButton) {
-                    deckContainer.classList.add('active');
-                    document.getElementById(`card-display-${categoryIndex}`).classList.add('active');
-                    drawButton.classList.add('active');
-                    drawButton.disabled = false; // Habilita o botão para seleção
+                    if (category.cards && category.cards.length > 0 && deckContainer && drawButton) {
+                        deckContainer.classList.add('active');
+                        document.getElementById(`card-display-${categoryIndex}`).classList.add('active');
+                        drawButton.classList.add('active');
+                        drawButton.disabled = false;
+                    }
                 }
             }
         }
         
-        // Função para ativar um monte de cartas específico (após rolar o D10)
+        // Função para ativar um monte de cartas específico (após rolar o D12)
         function activateDeck(categoryIndex) {
-            resetGameState(); // Garante um estado limpo antes de ativar um novo deck
+            resetGameState();
 
-            // Se for Free Choice, trata separadamente
-            if (categoryIndex === freeChoiceIndex) {
-                activateFreeChoice();
-                return;
-            }
-            
-            // Verifica se a categoria tem cartas e um elemento de UI correspondente
-            const category = categories[categoryIndex];
-            const deckContainer = document.getElementById(`deck-container-${categoryIndex}`);
-            const drawButton = document.getElementById(`draw-card-${categoryIndex}`);
+            if (freeChoiceIndexes.includes(categoryIndex)) {
+                activateFreeChoiceMode();
+            } else if (categories[categoryIndex]) {
+                const category = categories[categoryIndex];
+                const deckContainer = document.getElementById(`deck-container-${categoryIndex}`);
+                const drawButton = document.getElementById(`draw-card-${categoryIndex}`);
 
-            // Apenas ativa se o deck tiver cartas
-            if (category && category.cards && category.cards.length > 0 && deckContainer && drawButton) {
-                deckContainer.classList.add('active');
-                document.getElementById(`card-display-${categoryIndex}`).classList.add('active');
-                drawButton.classList.add('active');
-                drawButton.disabled = false; // Habilita o botão específico
-                activeCategory = categoryIndex;
+                if (category && category.cards && category.cards.length > 0 && deckContainer && drawButton) {
+                    deckContainer.classList.add('active');
+                    document.getElementById(`card-display-${categoryIndex}`).classList.add('active');
+                    drawButton.classList.add('active');
+                    drawButton.disabled = false;
+                    activeCategory = categoryIndex;
+                } else {
+                    d12Result.textContent += " (Deck vazio ou inválido. Role o D12 novamente)"; // Changed from d10Result
+                    document.getElementById('roll-d12').disabled = false; // Changed from roll-d10
+                }
             } else {
-                // Se a categoria selecionada não tiver cartas ou UI, informa e re-habilita o D10
-                d10Result.textContent += " (Deck vazio ou inválido. Role o D10 novamente)";
-                document.getElementById('roll-d10').disabled = false;
+                 d12Result.textContent += " (Categoria não encontrada. Role o D12 novamente)"; // Changed from d10Result
+                 document.getElementById('roll-d12').disabled = false; // Changed from roll-d10
             }
         }
         
-        // Roll D10 function
-        document.getElementById('roll-d10').addEventListener('click', function() {
-            if (this.disabled) return; // Previne clique duplo no botão de rolar
+        // Roll D12 function
+        document.getElementById('roll-d12').addEventListener('click', function() { // Changed from roll-d10
+            if (this.disabled) return;
 
-            resetGameState(); // Reseta o jogo ao rolar o D10 novamente
-            this.disabled = true; // Desabilita o botão de rolar imediatamente
+            resetGameState();
+            this.disabled = true;
 
-            d10Result.textContent = '';
-            d10Shape.classList.add('rolling');
+            d12Result.textContent = ''; // Changed from d10Result
+            d12Shape.classList.add('rolling'); // Changed from d10Shape
             
-            d10CurrentValue = Math.floor(Math.random() * 10);
-            updateD10Value(d10CurrentValue);
+            d12CurrentValue = Math.floor(Math.random() * 12); // Changed from 10
+            updateD12Value(d12CurrentValue);
             
             setTimeout(function() {
-                d10Shape.classList.remove('rolling');
-                d10Result.textContent = getD10ResultText(d10CurrentValue);
+                d12Shape.classList.remove('rolling'); // Changed from d10Shape
+                d12Result.textContent = getD12ResultText(d12CurrentValue); // Changed from d10Result
                 
-                activateDeck(d10CurrentValue); // Ativa o monte de cartas correspondente
+                activateDeck(d12CurrentValue);
             }, 2000);
         });
         
         // Função para mostrar a carta em destaque
         function showHighlightCard(cardUrl, categoryName) {
-            highlightCardTitle.textContent = `Carta Puxada: ${categoryName}`;
+            highlightCardTitle.textContent = `Carta Puxada: ${categoryName.toUpperCase()}`;
             highlightCardImage.src = cardUrl;
             highlightCardImage.alt = `Carta de ${categoryName}`;
             
             const img = new Image();
             img.onload = function() {
                 highlightCardArea.classList.add('visible');
-                // Opcional: rolar a página para a carta em destaque
                 highlightCardArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
             };
             img.onerror = function() {
                 console.error(`Falha ao carregar imagem para destaque: ${cardUrl}`);
-                highlightCardTitle.textContent = `Erro ao carregar carta de ${categoryName}`;
-                highlightCardImage.src = ''; // Limpa a imagem para não mostrar ícone de quebra
-                highlightCardArea.classList.add('visible'); // Ainda mostra a área com a mensagem de erro
+                highlightCardTitle.textContent = `Erro ao carregar carta de ${categoryName.toUpperCase()}`;
+                highlightCardImage.src = '';
+                highlightCardArea.classList.add('visible');
             };
             img.src = cardUrl;
         }
@@ -1023,16 +1036,15 @@
         // Função para esconder a carta em destaque
         function hideHighlightCard() {
             highlightCardArea.classList.remove('visible');
-            highlightCardImage.src = ''; // Limpa a imagem
-            highlightCardTitle.textContent = ''; // Limpa o título
+            highlightCardImage.src = '';
+            highlightCardTitle.textContent = '';
         }
 
         // Listener para o botão de fechar destaque
         closeHighlightButton.addEventListener('click', function() {
             hideHighlightCard();
-            resetGameState(); // Resetar o jogo ao fechar a carta em destaque
+            resetGameState();
         });
-
 
         // Configurar os botões de puxar carta
         for (const categoryIndex in categories) {
@@ -1041,44 +1053,53 @@
             const cardFront = document.getElementById(`card-front-${categoryIndex}`);
             const cardImageSmall = document.getElementById(`card-image-${categoryIndex}`);
 
-
-            if (drawButton) {
-                drawButton.addEventListener('click', function() {
-                    // IMPEDE múltiplas puxadas se já estiver no processo
-                    if (isDrawingCard) return; 
-                    isDrawingCard = true; // Define a flag para "está puxando"
-                    
-                    // Desabilita TODOS os botões de puxar e o botão de rolar D10
-                    document.querySelectorAll('.draw-button').forEach(btn => btn.disabled = true);
-                    document.getElementById('roll-d10').disabled = true;
-
-                    const cardUrl = getNextCard(categoryIndex);
-                    
-                    if (cardUrl) {
-                        cardDisplay.classList.add('flipped'); // Inicia a animação de flip da carta pequena
+            // Apenas configura listeners para categorias que realmente têm cartas puxáveis
+            // e que possuem os elementos HTML correspondentes (ou seja, não Free Choice)
+            if (!freeChoiceIndexes.includes(parseInt(categoryIndex))) {
+                if (drawButton) {
+                    drawButton.addEventListener('click', function() {
+                        if (isDrawingCard) return;
+                        isDrawingCard = true;
                         
-                        // Define a imagem da carta pequena (para o flip)
-                        cardImageSmall.src = cardUrl; 
-                        cardImageSmall.alt = `Carta de ${categories[categoryIndex].name}`;
+                        document.querySelectorAll('.draw-button').forEach(btn => btn.disabled = true);
+                        document.getElementById('roll-d12').disabled = true; // Changed from roll-d10
 
-                        // Espera a animação de flip (0.6s) antes de mostrar a carta em destaque
-                        setTimeout(() => {
-                            showHighlightCard(cardUrl, categories[categoryIndex].name); // Mostra a carta grande
-                            isDrawingCard = false; // Libera a puxada após a exibição
-                        }, 600); // Tempo correspondente à transição CSS do flip
+                        const cardUrl = getNextCard(categoryIndex);
                         
-                    } else {
-                        // Se não houver URL da carta (deck vazio, embora já tenha reembaralhado)
-                        console.warn(`Nenhuma carta para puxar na categoria ${categories[categoryIndex].name}.`);
-                        isDrawingCard = false; // Reseta a flag
-                        resetGameState(); // Reseta o estado do jogo completamente
+                        if (cardUrl) {
+                            cardDisplay.classList.add('flipped');
+                            
+                            cardImageSmall.src = cardUrl; 
+                            cardImageSmall.alt = `Carta de ${categories[categoryIndex].name}`;
+
+                            setTimeout(() => {
+                                showHighlightCard(cardUrl, categories[categoryIndex].name);
+                                isDrawingCard = false;
+                            }, 600);
+                            
+                        } else {
+                            console.warn(`Nenhuma carta para puxar na categoria ${categories[categoryIndex].name}.`);
+                            isDrawingCard = false;
+                            resetGameState();
+                        }
+                    });
+                }
+            } else {
+                // Não há botões de "Puxar Carta" para as categorias Free Choice no HTML
+                // então este bloco não é estritamente necessário para desabilitar botões
+                // mas é bom para consistência caso haja alguma referência perdida.
+                if (drawButton) { // Isso nunca será true, pois removemos os elementos.
+                    drawButton.style.display = 'none';
+                    const counterElement = document.getElementById(`counter-${categoryIndex}`);
+                    if (counterElement) {
+                        counterElement.textContent = '';
                     }
-                });
+                }
             }
         }
         
-        // Inicializar o D10 com o valor inicial
-        updateD10Value(d10CurrentValue);
+        // Inicializar o D12 com o valor inicial
+        updateD12Value(d12CurrentValue);
         
         // Inicializar os decks embaralhados
         initializeShuffledDecks();
