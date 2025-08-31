@@ -199,7 +199,7 @@
             transition: transform 0.1s;
         }
         
-        .d12-shape { /* Changed from d10-shape */
+        .d12-shape {
             clip-path: polygon(50% 0%, 86.6% 25%, 86.6% 75%, 50% 100%, 13.4% 75%, 13.4% 25%);
             background-color: #000;
             display: flex;
@@ -377,7 +377,7 @@
                 height: 200px;
             }
             
-            .d12-shape { /* Changed from d10-shape */
+            .d12-shape {
                 font-size: 36px;
             }
             
@@ -498,26 +498,304 @@
         .close-highlight-button:hover {
             background-color: #c82333;
         }
+
+        .timer-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .timer-display {
+            font-size: 48px;
+            font-weight: bold;
+            color: #2c3e50;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            min-width: 150px;
+            padding: 10px;
+            border: 3px solid #2c3e50;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+        }
+
+        .timer-display.warning {
+            color: #e74c3c;
+            border-color: #e74c3c;
+            animation: pulse-red 1s infinite;
+        }
+
+        .timer-display.finished {
+            color: #c0392b;
+            border-color: #c0392b;
+            background-color: #fadbd8;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .timer-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+            font-weight: bold;
+        }
+
+        .timer-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .timer-button:active {
+            transform: translateY(0);
+        }
+
+        .start-timer-button {
+            background-color: #27ae60;
+            color: white;
+        }
+
+        .start-timer-button:hover {
+            background-color: #219653;
+        }
+
+        .start-timer-button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .pause-timer-button {
+            background-color: #f39c12;
+            color: white;
+        }
+
+        .pause-timer-button:hover {
+            background-color: #e67e22;
+        }
+
+        .reset-timer-button {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .reset-timer-button:hover {
+            background-color: #c0392b;
+        }
+
+        @keyframes pulse-red {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .scoreboard-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .scoreboard-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .teams-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 20px;
+        }
+
+        .team-score {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            padding: 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .team-a {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .team-b {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .team-score.active {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
+
+        .team-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .team-points {
+            font-size: 36px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+
+        .current-team-indicator {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .answer-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        .answer-button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 100px;
+        }
+
+        .correct-button {
+            background-color: #27ae60;
+            color: white;
+        }
+
+        .correct-button:hover {
+            background-color: #219653;
+            transform: translateY(-2px);
+        }
+
+        .wrong-button {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .wrong-button:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .answer-button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .skip-counter {
+            font-size: 14px;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        .skip-button {
+            background-color: #f39c12;
+            color: white;
+        }
+
+        .skip-button:hover {
+            background-color: #e67e22;
+            transform: translateY(-2px);
+        }
+
+        .skip-button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Who Am I</h1>
         
+        <div class="timer-section">
+            <div class="timer-display" id="timer-display">02:00</div>
+            <div class="timer-controls">
+                <button class="timer-button start-timer-button" id="start-timer">Iniciar Timer</button>
+                <button class="timer-button pause-timer-button" id="pause-timer" style="display: none;">Pausar</button>
+                <button class="timer-button reset-timer-button" id="reset-timer">Resetar</button>
+            </div>
+        </div>
+        
+        <div class="scoreboard-section">
+            <div class="scoreboard-title">Placar</div>
+            <div class="teams-container">
+                <div class="team-score team-a" id="team-a">
+                    <div class="team-name">Time A</div>
+                    <div class="team-points" id="score-a">0</div>
+                    <div class="skip-counter" id="skip-counter-a">Pulos: 3</div>
+                </div>
+                <div class="team-score team-b" id="team-b">
+                    <div class="team-name">Time B</div>
+                    <div class="team-points" id="score-b">0</div>
+                    <div class="skip-counter" id="skip-counter-b">Pulos: 3</div>
+                </div>
+            </div>
+            <div class="current-team-indicator" id="current-team-indicator">Vez do Time A</div>
+        </div>
+        
         <div class="game-area">
             <div class="dice-section">
                 <div class="dice-container">
-                    <div class="dice-title">D12 - Categorias</div> <div class="canvas-container">
+                    <div class="dice-title">D12 - Categorias</div>
+                    <div class="canvas-container">
                         <div class="dice">
-                            <div id="d12-shape" class="dice-shape d12-shape"> <span id="d12-value">🎵</span> </div> </div>
+                            <div id="d12-shape" class="dice-shape d12-shape">
+                                <span id="d12-value">🎵</span> </div>
+                        </div>
                     </div>
-                    <button class="roll-button" id="roll-d12">Rolar D12</button> <div class="result" id="d12-result"></div> </div>
+                    <button class="roll-button" id="roll-d12">Rolar D12</button>
+                    <div class="result" id="d12-result"></div>
+                </div>
             </div>
 
             <div class="highlight-card-area" id="highlight-card-area">
                 <div class="highlight-card-title" id="highlight-card-title"></div>
                 <div class="highlight-card-image-container">
                     <img class="highlight-card-image" id="highlight-card-image" src="" alt="Carta em destaque">
+                </div>
+                <div class="answer-buttons" id="answer-buttons" style="display: none;">
+                    <button class="answer-button correct-button" id="correct-answer">✓ Acertou</button>
+                    <button class="answer-button wrong-button" id="wrong-answer">✗ Errou</button>
+                    <button class="answer-button skip-button" id="skip-answer">⏭ Pular</button>
                 </div>
                 <button class="close-highlight-button" id="close-highlight-button">Fechar Destaque</button>
             </div>
@@ -527,14 +805,14 @@
                 
                 <div class="card-decks">
                     <div class="card-deck-container" id="deck-container-0">
-                        <div class="card-deck-title">music</div>
+                        <div class="card-deck-title">Music</div>
                         <div class="card-display card-stack" id="card-display-0">
                             <div class="card-back">
                                 <div class="card-back-icon">🎵</div>
-                                <div class="card-back-text">music</div>
+                                <div class="card-back-text">Music</div>
                             </div>
                             <div class="card-front" id="card-front-0">
-                                <img class="card-image" id="card-image-0" src="" alt="Carta de music">
+                                <img class="card-image" id="card-image-0" src="" alt="Carta de Music">
                             </div>
                         </div>
                         <button class="draw-button" id="draw-card-0">Puxar Carta</button>
@@ -542,14 +820,14 @@
                     </div>
                     
                     <div class="card-deck-container" id="deck-container-1">
-                        <div class="card-deck-title">sports</div>
+                        <div class="card-deck-title">Sports</div>
                         <div class="card-display card-stack" id="card-display-1">
                             <div class="card-back">
                                 <div class="card-back-icon">🏆</div>
-                                <div class="card-back-text">sports</div>
+                                <div class="card-back-text">Sports</div>
                             </div>
                             <div class="card-front" id="card-front-1">
-                                <img class="card-image" id="card-image-1" src="" alt="Carta de sports">
+                                <img class="card-image" id="card-image-1" src="" alt="Carta de Sports">
                             </div>
                         </div>
                         <button class="draw-button" id="draw-card-1">Puxar Carta</button>
@@ -557,14 +835,14 @@
                     </div>
                     
                     <div class="card-deck-container" id="deck-container-2">
-                        <div class="card-deck-title">school</div>
+                        <div class="card-deck-title">School</div>
                         <div class="card-display card-stack" id="card-display-2">
                             <div class="card-back">
                                 <div class="card-back-icon">🎓</div>
-                                <div class="card-back-text">school</div>
+                                <div class="card-back-text">School</div>
                             </div>
                             <div class="card-front" id="card-front-2">
-                                <img class="card-image" id="card-image-2" src="" alt="Carta de school">
+                                <img class="card-image" id="card-image-2" src="" alt="Carta de School">
                             </div>
                         </div>
                         <button class="draw-button" id="draw-card-2">Puxar Carta</button>
@@ -572,14 +850,14 @@
                     </div>
                     
                     <div class="card-deck-container" id="deck-container-3">
-                        <div class="card-deck-title">objects</div>
+                        <div class="card-deck-title">Objects</div>
                         <div class="card-display card-stack" id="card-display-3">
                             <div class="card-back">
                                 <div class="card-back-icon">📢</div>
-                                <div class="card-back-text">objects</div>
+                                <div class="card-back-text">Objects</div>
                             </div>
                             <div class="card-front" id="card-front-3">
-                                <img class="card-image" id="card-image-3" src="" alt="Carta de objects">
+                                <img class="card-image" id="card-image-3" src="" alt="Carta de Objects">
                             </div>
                         </div>
                         <button class="draw-button" id="draw-card-3">Puxar Carta</button>
@@ -587,14 +865,14 @@
                     </div>
                     
                     <div class="card-deck-container" id="deck-container-4">
-                        <div class="card-deck-title">movies</div>
+                        <div class="card-deck-title">Movies</div>
                         <div class="card-display card-stack" id="card-display-4">
                             <div class="card-back">
                                 <div class="card-back-icon">🎥</div>
-                                <div class="card-back-text">movies</div>
+                                <div class="card-back-text">Movies</div>
                             </div>
                             <div class="card-front" id="card-front-4">
-                                <img class="card-image" id="card-image-4" src="" alt="Carta de movies">
+                                <img class="card-image" id="card-image-4" src="" alt="Carta de Movies">
                             </div>
                         </div>
                         <button class="draw-button" id="draw-card-4">Puxar Carta</button>
@@ -602,14 +880,14 @@
                     </div>
                     
                     <div class="card-deck-container" id="deck-container-5">
-                        <div class="card-deck-title">tv</div>
+                        <div class="card-deck-title">TV</div>
                         <div class="card-display card-stack" id="card-display-5">
                             <div class="card-back">
                                 <div class="card-back-icon">📺</div>
-                                <div class="card-back-text">tv</div>
+                                <div class="card-back-text">TV</div>
                             </div>
                             <div class="card-front" id="card-front-5">
-                                <img class="card-image" id="card-image-5" src="" alt="Carta de tv">
+                                <img class="card-image" id="card-image-5" src="" alt="Carta de TV">
                             </div>
                         </div>
                         <button class="draw-button" id="draw-card-5">Puxar Carta</button>
@@ -617,28 +895,29 @@
                     </div>
 
                     <div class="card-deck-container" id="deck-container-6">
-                        <div class="card-deck-title">animals</div>
+                        <div class="card-deck-title">Animals</div>
                         <div class="card-display card-stack" id="card-display-6">
                             <div class="card-back">
                                 <div class="card-back-icon">🐾</div>
-                                <div class="card-back-text">animals</div>
+                                <div class="card-back-text">Animals</div>
                             </div>
                             <div class="card-front" id="card-front-6">
-                                <img class="card-image" id="card-image-6" src="" alt="Carta de animals">
+                                <img class="card-image" id="card-image-6" src="" alt="Carta de Animals">
                             </div>
                         </div>
                         <button class="draw-button" id="draw-card-6">Puxar Carta</button>
                         <div class="card-counter" id="counter-6"></div>
                     </div>
+                    
                     <div class="card-deck-container" id="deck-container-7">
-                        <div class="card-deck-title">places</div>
+                        <div class="card-deck-title">Places</div>
                         <div class="card-display card-stack" id="card-display-7">
                             <div class="card-back">
                                 <div class="location-balloon"></div>
-                                <div class="card-back-text">places</div>
+                                <div class="card-back-text">Places</div>
                             </div>
                             <div class="card-front" id="card-front-7">
-                                <img class="card-image" id="card-image-7" src="" alt="Carta de places">
+                                <img class="card-image" id="card-image-7" src="" alt="Carta de Places">
                             </div>
                         </div>
                         <button class="draw-button" id="draw-card-7">Puxar Carta</button>
@@ -646,14 +925,14 @@
                     </div>
                     
                     <div class="card-deck-container" id="deck-container-8">
-                        <div class="card-deck-title">authors</div>
+                        <div class="card-deck-title">Authors</div>
                         <div class="card-display card-stack" id="card-display-8">
                             <div class="card-back">
                                 <div class="card-back-icon">📕</div>
-                                <div class="card-back-text">authors</div>
+                                <div class="card-back-text">Authors</div>
                             </div>
                             <div class="card-front" id="card-front-8">
-                                <img class="card-image" id="card-image-8" src="" alt="Carta de authors">
+                                <img class="card-image" id="card-image-8" src="" alt="Carta de Authors">
                             </div>
                         </div>
                         <button class="draw-button" id="draw-card-8">Puxar Carta</button>
@@ -661,25 +940,146 @@
                     </div>
 
                     <div class="card-deck-container" id="deck-container-9">
-                        <div class="card-deck-title">professions</div>
+                        <div class="card-deck-title">Professions</div>
                         <div class="card-display card-stack" id="card-display-9">
                             <div class="card-back">
                                 <div class="card-back-icon">💼</div>
-                                <div class="card-back-text">professions</div>
+                                <div class="card-back-text">Professions</div>
                             </div>
                             <div class="card-front" id="card-front-9">
-                                <img class="card-image" id="card-image-9" src="" alt="Carta de professions">
+                                <img class="card-image" id="card-image-9" src="" alt="Carta de Professions">
                             </div>
                         </div>
                         <button class="draw-button" id="draw-card-9">Puxar Carta</button>
                         <div class="card-counter" id="counter-9"></div>
                     </div>
-                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
+        // Timer variables
+        let timerInterval = null;
+        let timeRemaining = 120; // 2 minutos em segundos
+        let isTimerRunning = false;
+        let isPaused = false;
+
+        // Timer elements
+        const timerDisplay = document.getElementById('timer-display');
+        const startTimerButton = document.getElementById('start-timer');
+        const pauseTimerButton = document.getElementById('pause-timer');
+        const resetTimerButton = document.getElementById('reset-timer');
+
+        // Função para formatar o tempo em MM:SS
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        // Função para atualizar o display do timer
+        function updateTimerDisplay() {
+            timerDisplay.textContent = formatTime(timeRemaining);
+            
+            // Adicionar classe de aviso quando restam 30 segundos ou menos
+            if (timeRemaining <= 30 && timeRemaining > 0) {
+                timerDisplay.classList.add('warning');
+            } else {
+                timerDisplay.classList.remove('warning');
+            }
+
+            // Adicionar classe de finalizado quando o tempo acaba
+            if (timeRemaining === 0) {
+                timerDisplay.classList.add('finished');
+                timerDisplay.classList.remove('warning');
+            } else {
+                timerDisplay.classList.remove('finished');
+            }
+        }
+
+        // Função para iniciar o timer
+        function startTimer() {
+            if (isTimerRunning && !isPaused) return;
+            
+            isTimerRunning = true;
+            isPaused = false;
+            
+            startTimerButton.style.display = 'none';
+            pauseTimerButton.style.display = 'inline-block';
+            
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                updateTimerDisplay();
+                
+                if (timeRemaining <= 0) {
+                    stopTimer();
+                    alert('Tempo esgotado! ⏰');
+                }
+            }, 1000);
+        }
+
+        // Função para pausar o timer
+        function pauseTimer() {
+            if (!isTimerRunning) return;
+            
+            isPaused = true;
+            clearInterval(timerInterval);
+            
+            startTimerButton.style.display = 'inline-block';
+            pauseTimerButton.style.display = 'none';
+            startTimerButton.textContent = 'Continuar';
+        }
+
+        // Função para parar o timer
+        function stopTimer() {
+            isTimerRunning = false;
+            isPaused = false;
+            clearInterval(timerInterval);
+            
+            startTimerButton.style.display = 'inline-block';
+            pauseTimerButton.style.display = 'none';
+            startTimerButton.textContent = 'Iniciar Timer';
+        }
+
+        // Função para resetar o timer
+        function resetTimer() {
+            stopTimer();
+            timeRemaining = 120; // 2 minutos
+            updateTimerDisplay();
+        }
+
+        // Event listeners para os botões do timer
+        startTimerButton.addEventListener('click', startTimer);
+        pauseTimerButton.addEventListener('click', pauseTimer);
+        resetTimerButton.addEventListener('click', resetTimer);
+
+        // Inicializar o display do timer
+        updateTimerDisplay();
+
+        // Contador de rolagens para forçar escolha livre nas duas primeiras
+        let rollCount = 0;
+
+        // Variáveis do placar
+        let scoreA = 0;
+        let scoreB = 0;
+        let currentTeam = 'A'; // 'A' ou 'B'
+        let skipsA = 3; // Pulos disponíveis para o Time A
+        let skipsB = 3; // Pulos disponíveis para o Time B
+
+        // Elementos do placar
+        const scoreAElement = document.getElementById('score-a');
+        const scoreBElement = document.getElementById('score-b');
+        const teamAElement = document.getElementById('team-a');
+        const teamBElement = document.getElementById('team-b');
+        const currentTeamIndicator = document.getElementById('current-team-indicator');
+        const answerButtons = document.getElementById('answer-buttons');
+        const correctButton = document.getElementById('correct-answer');
+        const wrongButton = document.getElementById('wrong-answer');
+        const skipButton = document.getElementById('skip-answer');
+        const skipCounterA = document.getElementById('skip-counter-a');
+        const skipCounterB = document.getElementById('skip-counter-b');
+
         // Array de ícones para o D12
         const d12Icons = ['🎵', '🏆', '🎓', '📢', '🎥', '📺', '🐾', '📍', '📕', '💼', '❓', '❓']; // Dois '❓' para Free Choice
         
@@ -688,136 +1088,134 @@
         // Índices para as categorias Free Choice
         const freeChoiceIndexes = [10, 11]; // Agora temos dois índices para Free Choice
         
-        // Categorias e seus respectivos cards
-        const categories = {
-            0: { // music (nota musical)
-                name: 'music',
-                icon: '🎵',
-                cards: [
-                    'music/01.jpg', 'music/02.jpg', 'music/03.jpg', 'music/04.jpg', 'music/05.jpg',
-                    'music/06.jpg', 'music/07.jpg', 'music/08.jpg', 'music/09.jpg', 'music/10.jpg',
-                    'music/11.jpg', 'music/12.jpg', 'music/13.jpg', 'music/14.jpg', 'music/15.jpg',
-                    'music/16.jpg', 'music/17.jpg', 'music/18.jpg', 'music/19.jpg', 'music/20.jpg',
-                    'music/21.jpg', 'music/22.jpg', 'music/23.jpg', 'music/24.jpg', 'music/25.jpg',
-                    'music/26.jpg', 'music/27.jpg', 'music/28.jpg', 'music/29.jpg', 'music/30.jpg'
-                ]
-            },
-            1: { // sports (troféu)
-                name: 'sports',
-                icon: '🏆',
-                cards: [
-                    'sports/01.jpg', 'sports/02.jpg', 'sports/03.jpg', 'sports/04.jpg', 'sports/05.jpg',
-                    'sports/06.jpg', 'sports/07.jpg', 'sports/08.jpg', 'sports/09.jpg', 'sports/10.jpg',
-                    'sports/11.jpg', 'sports/12.jpg', 'sports/13.jpg', 'sports/14.jpg', 'sports/15.jpg',
-                    'sports/16.jpg', 'sports/17.jpg', 'sports/18.jpg', 'sports/19.jpg', 'sports/20.jpg',
-                    'sports/21.jpg', 'sports/22.jpg', 'sports/23.jpg', 'sports/24.jpg', 'sports/25.jpg',
-                    'sports/26.jpg', 'sports/27.jpg', 'sports/28.jpg', 'sports/29.jpg', 'sports/30.jpg'
-                ]
-            },
-            2: { // school (chapéu de formatura)
-                name: 'school',
-                icon: '🎓',
-                cards: [
-                    'school/01.jpg', 'school/02.jpg', 'school/03.jpg', 'school/04.jpg', 'school/05.jpg',
-                    'school/06.jpg', 'school/07.jpg', 'school/08.jpg', 'school/09.jpg', 'school/10.jpg',
-                    'school/11.jpg', 'school/12.jpg', 'school/13.jpg', 'school/14.jpg', 'school/15.jpg',
-                    'school/16.jpg', 'school/17.jpg', 'school/18.jpg', 'school/19.jpg', 'school/20.jpg',
-                    'school/21.jpg', 'school/22.jpg', 'school/23.jpg', 'school/24.jpg', 'school/25.jpg',
-                    'school/26.jpg', 'school/27.jpg', 'school/28.jpg', 'school/29.jpg', 'school/30.jpg'
-                ]
-            },
-            3: { // objects (megafone)
-                name: 'objects',
-                icon: '📢',
-                cards: [
-                    'objects/01.jpg', 'objects/02.jpg', 'objects/03.jpg', 'objects/04.jpg', 'objects/05.jpg',
-                    'objects/06.jpg', 'objects/07.jpg', 'objects/08.jpg', 'objects/09.jpg', 'objects/10.jpg',
-                    'objects/11.jpg', 'objects/12.jpg', 'objects/13.jpg', 'objects/14.jpg', 'objects/15.jpg',
-                    'objects/16.jpg', 'objects/17.jpg', 'objects/18.jpg', 'objects/19.jpg', 'objects/20.jpg',
-                    'objects/21.jpg', 'objects/22.jpg', 'objects/23.jpg', 'objects/24.jpg', 'objects/25.jpg'
-                ]
-            },
-            4: { // movies (câmera de cinema)
-                name: 'movies',
-                icon: '🎥',
-                cards: [
-                    'movies/01.jpg', 'movies/02.jpg', 'movies/03.jpg', 'movies/04.jpg', 'movies/05.jpg',
-                    'movies/06.jpg', 'movies/07.jpg', 'movies/08.jpg', 'movies/09.jpg', 'movies/10.jpg',
-                    'movies/11.jpg', 'movies/12.jpg', 'movies/13.jpg', 'movies/14.jpg', 'movies/15.jpg',
-                    'movies/16.jpg', 'movies/17.jpg', 'movies/18.jpg', 'movies/19.jpg', 'movies/20.jpg',
-                    'movies/21.jpg', 'movies/22.jpg', 'movies/23.jpg', 'movies/24.jpg', 'movies/25.jpg',
-                    'movies/26.jpg', 'movies/27.jpg', 'movies/28.jpg', 'movies/29.jpg', 'movies/30.jpg'
-                ]
-            },
-            5: { // tv (televisão)
-                name: 'tv',
-                icon: '📺',
-                cards: [
-                    'tv/01.jpg', 'tv/02.jpg', 'tv/03.jpg', 'tv/04.jpg', 'tv/05.jpg',
-                    'tv/06.jpg', 'tv/07.jpg', 'tv/08.jpg', 'tv/09.jpg', 'tv/10.jpg',
-                    'tv/11.jpg', 'tv/12.jpg', 'tv/13.jpg', 'tv/14.jpg', 'tv/15.jpg',
-                    'tv/16.jpg', 'tv/17.jpg', 'tv/18.jpg', 'tv/19.jpg', 'tv/20.jpg',
-                    'tv/21.jpg', 'tv/22.jpg', 'tv/23.jpg', 'tv/24.jpg', 'tv/25.jpg',
-                    'tv/26.jpg', 'tv/27.jpg', 'tv/28.jpg', 'tv/29.jpg', 'tv/30.jpg'
-                ]
-            },
-            6: { // animals (Patinha) - Added
-                name: 'animals',
-                icon: '🐾',
-                cards: [
-                    'animals/01.jpg', 'animals/02.jpg', 'animals/03.jpg', 'animals/04.jpg', 'animals/05.jpg',
-                    'animals/06.jpg', 'animals/07.jpg', 'animals/08.jpg', 'animals/09.jpg', 'animals/10.jpg',
-                    'animals/11.jpg', 'animals/12.jpg', 'animals/13.jpg', 'animals/14.jpg', 'animals/15.jpg',
-                    'animals/16.jpg', 'animals/17.jpg', 'animals/18.jpg', 'animals/19.jpg', 'animals/20.jpg',
-                    'animals/21.jpg', 'animals/22.jpg', 'animals/23.jpg', 'animals/24.jpg', 'animals/25.jpg'
-                ]
-            },
-            7: { // places (balão de localização)
-                name: 'places',
-                icon: '📍',
-                cards: [
-                    'places/01.jpg', 'places/02.jpg', 'places/03.jpg', 'places/04.jpg', 'places/05.jpg',
-                    'places/06.jpg', 'places/07.jpg', 'places/08.jpg', 'places/09.jpg', 'places/10.jpg',
-                    'places/11.jpg', 'places/12.jpg', 'places/13.jpg', 'places/14.jpg', 'places/15.jpg',
-                    'places/16.jpg', 'places/17.jpg', 'places/18.jpg', 'places/19.jpg', 'places/20.jpg',
-                    'places/21.jpg', 'places/22.jpg', 'places/23.jpg', 'places/24.jpg', 'places/25.jpg',
-                    'places/26.jpg', 'places/27.jpg', 'places/28.jpg', 'places/29.jpg', 'places/30.jpg'
-                ]
-            },
-            8: { // authors (livro vermelho)
-                name: 'authors',
-                icon: '📕',
-                cards: [
-                    'authors/01.jpg', 'authors/02.jpg', 'authors/03.jpg', 'authors/04.jpg', 'authors/05.jpg',
-                    'authors/06.jpg', 'authors/07.jpg', 'authors/08.jpg', 'authors/09.jpg', 'authors/10.jpg',
-                    'authors/11.jpg', 'authors/12.jpg', 'authors/13.jpg', 'authors/14.jpg', 'authors/15.jpg',
-                    'authors/16.jpg', 'authors/17.jpg', 'authors/18.jpg', 'authors/19.jpg', 'authors/20.jpg',
-                    'authors/21.jpg', 'authors/22.jpg', 'authors/23.jpg', 'authors/24.jpg', 'authors/25.jpg',
-                    'authors/26.jpg', 'authors/27.jpg', 'authors/28.jpg', 'authors/29.jpg', 'authors/30.jpg'
-                ]
-            },
-            9: { // professions (maleta)
-                name: 'professions',
-                icon: '💼',
-                cards: [
-                    'professions/01.jpg', 'professions/02.jpg', 'professions/03.jpg', 'professions/04.jpg', 'professions/05.jpg',
-                    'professions/06.jpg', 'professions/07.jpg', 'professions/08.jpg', 'professions/09.jpg', 'professions/10.jpg',
-                    'professions/11.jpg', 'professions/12.jpg', 'professions/13.jpg', 'professions/14.jpg', 'professions/15.jpg',
-                    'professions/16.jpg', 'professions/17.jpg', 'professions/18.jpg', 'professions/19.jpg', 'professions/20.jpg',
-                    'professions/21.jpg', 'professions/22.jpg', 'professions/23.jpg', 'professions/24.jpg', 'professions/25.jpg'
-                ]
-            },
-            10: { // Free Choice 1
-                name: 'free choice',
-                icon: '❓',
-                cards: [] 
-            },
-            11: { // Free Choice 2
-                name: 'free choice',
-                icon: '❓',
-                cards: []
-            }
-        };
+       const categories = {
+    0: { // Music (nota musical)
+        name: 'music',
+        icon: '🎵',
+        cards: [
+            'music/01.jpg', 'music/02.jpg', 'music/03.jpg', 'music/04.jpg', 'music/05.jpg',
+            'music/06.jpg', 'music/07.jpg', 'music/08.jpg', 'music/09.jpg', 'music/10.jpg',
+            'music/11.jpg', 'music/12.jpg', 'music/13.jpg', 'music/14.jpg', 'music/15.jpg',
+            'music/16.jpg', 'music/17.jpg', 'music/18.jpg', 'music/19.jpg', 'music/20.jpg',
+            'music/21.jpg', 'music/22.jpg', 'music/23.jpg', 'music/24.jpg', 'music/25.jpg',
+            'music/26.jpg', 'music/27.jpg', 'music/28.jpg', 'music/29.jpg', 'music/30.jpg'
+        ]
+    },
+    1: { // Sports (troféu)
+        name: 'sports',
+        icon: '🏆',
+        cards: [
+            'sports/01.jpg', 'sports/02.jpg', 'sports/03.jpg', 'sports/04.jpg', 'sports/05.jpg',
+            'sports/06.jpg', 'sports/07.jpg', 'sports/08.jpg', 'sports/09.jpg', 'sports/10.jpg',
+            'sports/11.jpg', 'sports/12.jpg', 'sports/13.jpg', 'sports/14.jpg', 'sports/15.jpg',
+            'sports/16.jpg', 'sports/17.jpg', 'sports/18.jpg', 'sports/19.jpg', 'sports/20.jpg',
+            'sports/21.jpg', 'sports/22.jpg', 'sports/23.jpg', 'sports/24.jpg', 'sports/25.jpg',
+            'sports/26.jpg', 'sports/27.jpg', 'sports/28.jpg', 'sports/29.jpg', 'sports/30.jpg'
+        ]
+    },
+    2: { // School (chapéu de formatura)
+        name: 'school',
+        icon: '🎓',
+        cards: [
+            'school/01.jpg', 'school/02.jpg', 'school/03.jpg', 'school/04.jpg', 'school/05.jpg',
+            'school/06.jpg', 'school/07.jpg', 'school/08.jpg', 'school/09.jpg', 'school/10.jpg',
+            'school/11.jpg', 'school/12.jpg', 'school/13.jpg', 'school/14.jpg', 'school/15.jpg',
+            'school/16.jpg', 'school/17.jpg', 'school/18.jpg', 'school/19.jpg', 'school/20.jpg',
+            'school/21.jpg', 'school/22.jpg', 'school/23.jpg', 'school/24.jpg', 'school/25.jpg',
+            'school/26.jpg', 'school/27.jpg', 'school/28.jpg', 'school/29.jpg', 'school/30.jpg'
+        ]
+    },
+    3: { // Objects (megafone)
+        name: 'objects',
+        icon: '📢',
+        cards: [
+            'objects/01.jpg', 'objects/02.jpg', 'objects/03.jpg', 'objects/04.jpg', 'objects/05.jpg',
+            'objects/06.jpg', 'objects/07.jpg', 'objects/08.jpg', 'objects/09.jpg', 'objects/10.jpg',
+            'objects/11.jpg', 'objects/12.jpg', 'objects/13.jpg', 'objects/14.jpg', 'objects/15.jpg',
+            'objects/16.jpg', 'objects/17.jpg', 'objects/18.jpg', 'objects/19.jpg', 'objects/20.jpg',
+            'objects/21.jpg', 'objects/22.jpg', 'objects/23.jpg', 'objects/24.jpg', 'objects/25.jpg'
+        ]
+    },
+    4: { // Movies (câmera de cinema)
+        name: 'movies',
+        icon: '🎥',
+        cards: [
+            'movies/01.jpg', 'movies/02.jpg', 'movies/03.jpg', 'movies/04.jpg', 'movies/05.jpg',
+            'movies/06.jpg', 'movies/07.jpg', 'movies/08.jpg', 'movies/09.jpg', 'movies/10.jpg',
+            'movies/11.jpg', 'movies/12.jpg', 'movies/13.jpg', 'movies/14.jpg', 'movies/15.jpg',
+            'movies/16.jpg', 'movies/17.jpg', 'movies/18.jpg', 'movies/19.jpg', 'movies/20.jpg',
+            'movies/21.jpg', 'movies/22.jpg', 'movies/23.jpg', 'movies/24.jpg', 'movies/25.jpg',
+            'movies/26.jpg', 'movies/27.jpg', 'movies/28.jpg', 'movies/29.jpg', 'movies/30.jpg'
+        ]
+    },
+    5: { // TV (televisão)
+        name: 'tv',
+        icon: '📺',
+        cards: [
+            'tv/01.jpg', 'tv/02.jpg', 'tv/03.jpg', 'tv/04.jpg', 'tv/05.jpg',
+            'tv/06.jpg', 'tv/07.jpg', 'tv/08.jpg', 'tv/09.jpg', 'tv/10.jpg',
+            'tv/11.jpg', 'tv/12.jpg', 'tv/13.jpg', 'tv/14.jpg', 'tv/15.jpg',
+            'tv/16.jpg', 'tv/17.jpg', 'tv/18.jpg', 'tv/19.jpg', 'tv/20.jpg',
+            'tv/21.jpg', 'tv/22.jpg', 'tv/23.jpg', 'tv/24.jpg', 'tv/25.jpg',
+            'tv/26.jpg', 'tv/27.jpg', 'tv/28.jpg', 'tv/29.jpg', 'tv/30.jpg'
+        ]
+    },
+    6: { // Animals (Patinha)
+        name: 'animals',
+        icon: '🐾',
+        cards: [
+            'animals/01.jpg', 'animals/02.jpg', 'animals/03.jpg', 'animals/04.jpg', 'animals/05.jpg',
+            'animals/06.jpg', 'animals/07.jpg', 'animals/08.jpg', 'animals/09.jpg', 'animals/10.jpg',
+            'animals/11.jpg', 'animals/12.jpg', 'animals/13.jpg', 'animals/14.jpg', 'animals/15.jpg',
+            'animals/16.jpg', 'animals/17.jpg', 'animals/18.jpg', 'animals/19.jpg', 'animals/20.jpg',
+            'animals/21.jpg', 'animals/22.jpg', 'animals/23.jpg', 'animals/24.jpg', 'animals/25.jpg'
+        ]
+    },
+    7: { // Places (balão de localização)
+        name: 'places',
+        icon: '📍',
+        cards: [
+            'places/01.jpg', 'places/02.jpg', 'places/03.jpg', 'places/04.jpg', 'places/05.jpg',
+            'places/06.jpg', 'places/07.jpg', 'places/08.jpg', 'places/09.jpg', 'places/10.jpg',
+            'places/11.jpg', 'places/12.jpg', 'places/13.jpg', 'places/14.jpg', 'places/15.jpg',
+            'places/16.jpg', 'places/17.jpg', 'places/18.jpg', 'places/19.jpg', 'places/20.jpg',
+            'places/21.jpg', 'places/22.jpg', 'places/23.jpg', 'places/24.jpg', 'places/25.jpg'
+        ]
+    },
+    8: { // Authors (livro vermelho)
+        name: 'authors',
+        icon: '📕',
+        cards: [
+            'authors/01.jpg', 'authors/02.jpg', 'authors/03.jpg', 'authors/04.jpg', 'authors/05.jpg',
+            'authors/06.jpg', 'authors/07.jpg', 'authors/08.jpg', 'authors/09.jpg', 'authors/10.jpg',
+            'authors/11.jpg', 'authors/12.jpg', 'authors/13.jpg', 'authors/14.jpg', 'authors/15.jpg',
+            'authors/16.jpg', 'authors/17.jpg', 'authors/18.jpg', 'authors/19.jpg', 'authors/20.jpg',
+            'authors/21.jpg', 'authors/22.jpg', 'authors/23.jpg', 'authors/24.jpg', 'authors/25.jpg',
+            'authors/26.jpg', 'authors/27.jpg', 'authors/28.jpg', 'authors/29.jpg', 'authors/30.jpg'
+        ]
+    },
+    9: { // Professions (maleta)
+        name: 'professions',
+        icon: '💼',
+        cards: [
+            'professions/01.jpg', 'professions/02.jpg', 'professions/03.jpg', 'professions/04.jpg', 'professions/05.jpg',
+            'professions/06.jpg', 'professions/07.jpg', 'professions/08.jpg', 'professions/09.jpg', 'professions/10.jpg',
+            'professions/11.jpg', 'professions/12.jpg', 'professions/13.jpg', 'professions/14.jpg', 'professions/15.jpg',
+            'professions/16.jpg', 'professions/17.jpg', 'professions/18.jpg', 'professions/19.jpg', 'professions/20.jpg',
+            'professions/21.jpg', 'professions/22.jpg', 'professions/23.jpg', 'professions/24.jpg', 'professions/25.jpg'
+        ]
+    },
+    10: { // Free Choice 1
+        name: 'Free Choice',
+        icon: '❓',
+        cards: [] 
+    },
+    11: { // Free Choice 2
+        name: 'Free Choice',
+        icon: '❓',
+        cards: []
+    }
+};
         
         // DOM elements
         const d12Shape = document.getElementById('d12-shape');
@@ -920,12 +1318,12 @@
             if (freeChoiceIndexes.includes(value)) {
                 return `Resultado: ESCOLHA LIVRE!`;
             }
-            return `Resultado: ${categories[value].name.toUpperCase()}`; // Mantém o texto do resultado em maiúsculas para clareza
+            return `Resultado: ${categories[value].name}`;
         }
         
         // Função para resetar todos os botões de puxar e o estado visual do jogo
         function resetGameState() {
-            document.getElementById('roll-d12').disabled = false; // Changed from roll-d10
+            document.getElementById('roll-d12').disabled = false;
             
             document.querySelectorAll('.card-deck-container').forEach(container => {
                 container.classList.remove('active');
@@ -990,39 +1388,181 @@
                     drawButton.disabled = false;
                     activeCategory = categoryIndex;
                 } else {
-                    d12Result.textContent += " (Deck vazio ou inválido. Role o D12 novamente)"; // Changed from d10Result
-                    document.getElementById('roll-d12').disabled = false; // Changed from roll-d10
+                    d12Result.textContent += " (Deck vazio ou inválido. Role o D12 novamente)";
+                    document.getElementById('roll-d12').disabled = false;
                 }
             } else {
-                 d12Result.textContent += " (Categoria não encontrada. Role o D12 novamente)"; // Changed from d10Result
-                 document.getElementById('roll-d12').disabled = false; // Changed from roll-d10
+                 d12Result.textContent += " (Categoria não encontrada. Role o D12 novamente)";
+                 document.getElementById('roll-d12').disabled = false;
             }
         }
         
         // Roll D12 function
-        document.getElementById('roll-d12').addEventListener('click', function() { // Changed from roll-d10
+        document.getElementById('roll-d12').addEventListener('click', function() {
             if (this.disabled) return;
 
             resetGameState();
             this.disabled = true;
 
-            d12Result.textContent = ''; // Changed from d10Result
-            d12Shape.classList.add('rolling'); // Changed from d10Shape
+            d12Result.textContent = '';
+            d12Shape.classList.add('rolling');
             
-            d12CurrentValue = Math.floor(Math.random() * 12); // Changed from 10
+            // Incrementar contador de rolagens
+            rollCount++;
+            
+            // Forçar escolha livre nas duas primeiras rolagens
+            if (rollCount <= 2) {
+                d12CurrentValue = freeChoiceIndexes[0]; // Usar o primeiro índice de Free Choice (10)
+            } else {
+                d12CurrentValue = Math.floor(Math.random() * 12);
+            }
+            
             updateD12Value(d12CurrentValue);
             
             setTimeout(function() {
-                d12Shape.classList.remove('rolling'); // Changed from d10Shape
-                d12Result.textContent = getD12ResultText(d12CurrentValue); // Changed from d10Result
+                d12Shape.classList.remove('rolling');
+                d12Result.textContent = getD12ResultText(d12CurrentValue);
+                
+                // Adicionar indicação de que é uma rolagem forçada
+                if (rollCount <= 2) {
+                    d12Result.textContent += ` (Rodada ${rollCount} - Escolha da equipe)`;
+                }
                 
                 activateDeck(d12CurrentValue);
             }, 2000);
         });
         
+        // Função para atualizar o display do placar
+        function updateScoreDisplay() {
+            scoreAElement.textContent = scoreA;
+            scoreBElement.textContent = scoreB;
+            skipCounterA.textContent = `Pulos: ${skipsA}`;
+            skipCounterB.textContent = `Pulos: ${skipsB}`;
+            
+            // Remover classe active de ambos os times
+            teamAElement.classList.remove('active');
+            teamBElement.classList.remove('active');
+            
+            // Adicionar classe active ao time atual
+            if (currentTeam === 'A') {
+                teamAElement.classList.add('active');
+                currentTeamIndicator.textContent = 'Vez do Time A';
+            } else {
+                teamBElement.classList.add('active');
+                currentTeamIndicator.textContent = 'Vez do Time B';
+            }
+        }
+
+        // Função para alternar entre os times
+        function switchTeam() {
+            currentTeam = currentTeam === 'A' ? 'B' : 'A';
+            updateScoreDisplay();
+        }
+
+        // Função para adicionar ponto ao time atual
+        function addPointToCurrentTeam() {
+            if (currentTeam === 'A') {
+                scoreA++;
+            } else {
+                scoreB++;
+            }
+            updateScoreDisplay();
+        }
+
+        // Função para resetar o placar
+        function resetScore() {
+            scoreA = 0;
+            scoreB = 0;
+            skipsA = 3;
+            skipsB = 3;
+            currentTeam = 'A';
+            updateScoreDisplay();
+        }
+
+        // Função para verificar se o time atual tem pulos disponíveis
+        function hasSkipsAvailable() {
+            return (currentTeam === 'A' && skipsA > 0) || (currentTeam === 'B' && skipsB > 0);
+        }
+
+        // Função para usar um pulo do time atual
+        function useSkip() {
+            if (currentTeam === 'A' && skipsA > 0) {
+                skipsA--;
+            } else if (currentTeam === 'B' && skipsB > 0) {
+                skipsB--;
+            }
+            updateScoreDisplay();
+        }
+
+        // Função para mostrar os botões de resposta
+        function showAnswerButtons() {
+            answerButtons.style.display = 'flex';
+            correctButton.disabled = false;
+            wrongButton.disabled = false;
+            
+            // Habilitar/desabilitar botão de pular baseado na disponibilidade
+            skipButton.disabled = !hasSkipsAvailable();
+        }
+
+        // Função para esconder os botões de resposta
+        function hideAnswerButtons() {
+            answerButtons.style.display = 'none';
+        }
+
+        // Event listeners para os botões de resposta
+        correctButton.addEventListener('click', function() {
+            addPointToCurrentTeam();
+            hideAnswerButtons();
+            switchTeam();
+            hideHighlightCard();
+            resetGameState();
+        });
+
+        wrongButton.addEventListener('click', function() {
+            hideAnswerButtons();
+            switchTeam();
+            hideHighlightCard();
+            resetGameState();
+        });
+
+        // Event listener para o botão de pular
+        skipButton.addEventListener('click', function() {
+            if (hasSkipsAvailable()) {
+                useSkip();
+                hideAnswerButtons();
+                hideHighlightCard();
+                resetGameState();
+                // Não trocar de time quando pular - o mesmo time tenta novamente
+            }
+        });
+
+        // Função para resetar o contador de rolagens (útil para reiniciar o jogo)
+        function resetRollCount() {
+            rollCount = 0;
+        }
+
+        // Adicionar botão de reset do jogo (opcional)
+        function addResetGameButton() {
+            const resetGameButton = document.createElement('button');
+            resetGameButton.textContent = 'Reiniciar Jogo';
+            resetGameButton.className = 'timer-button reset-timer-button';
+            resetGameButton.style.marginTop = '10px';
+            resetGameButton.addEventListener('click', function() {
+                resetRollCount();
+                resetGameState();
+                resetTimer();
+                resetScore(); // Resetar placar também
+                d12Result.textContent = '';
+            });
+            
+            // Adicionar o botão após os controles do timer
+            const timerControls = document.querySelector('.timer-controls');
+            timerControls.appendChild(resetGameButton);
+        }
+
         // Função para mostrar a carta em destaque
         function showHighlightCard(cardUrl, categoryName) {
-            highlightCardTitle.textContent = `Carta Puxada: ${categoryName.toUpperCase()}`;
+            highlightCardTitle.textContent = `Carta Puxada: ${categoryName}`;
             highlightCardImage.src = cardUrl;
             highlightCardImage.alt = `Carta de ${categoryName}`;
             
@@ -1030,12 +1570,14 @@
             img.onload = function() {
                 highlightCardArea.classList.add('visible');
                 highlightCardArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                showAnswerButtons(); // Mostrar botões de resposta quando a carta aparecer
             };
             img.onerror = function() {
                 console.error(`Falha ao carregar imagem para destaque: ${cardUrl}`);
-                highlightCardTitle.textContent = `Erro ao carregar carta de ${categoryName.toUpperCase()}`;
+                highlightCardTitle.textContent = `Erro ao carregar carta de ${categoryName}`;
                 highlightCardImage.src = '';
                 highlightCardArea.classList.add('visible');
+                showAnswerButtons(); // Mostrar botões mesmo se houver erro na imagem
             };
             img.src = cardUrl;
         }
@@ -1045,6 +1587,7 @@
             highlightCardArea.classList.remove('visible');
             highlightCardImage.src = '';
             highlightCardTitle.textContent = '';
+            hideAnswerButtons(); // Esconder botões de resposta
         }
 
         // Listener para o botão de fechar destaque
@@ -1069,7 +1612,7 @@
                         isDrawingCard = true;
                         
                         document.querySelectorAll('.draw-button').forEach(btn => btn.disabled = true);
-                        document.getElementById('roll-d12').disabled = true; // Changed from roll-d10
+                        document.getElementById('roll-d12').disabled = true;
 
                         const cardUrl = getNextCard(categoryIndex);
                         
@@ -1110,6 +1653,12 @@
         
         // Inicializar os decks embaralhados
         initializeShuffledDecks();
+        
+        // Adicionar botão de reiniciar jogo
+        addResetGameButton();
+        
+        // Inicializar o placar
+        updateScoreDisplay();
         
         // Chamar resetGameState no carregamento para garantir o estado inicial correto
         resetGameState();
