@@ -1,4 +1,4 @@
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -820,9 +820,71 @@
         .inventory-card {
             width: 100%;
             height: 120px;
-            object-fit: contain;
+            object-fit: cover; /* Alterado para 'cover' para melhor visualização */
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            cursor: pointer; /* Adicionado cursor para indicar que é clicável */
+            transition: transform 0.2s;
+        }
+
+        .inventory-card:hover {
+            transform: scale(1.05);
+        }
+
+        /* Novo CSS para o Modal de Carta */
+        #card-modal {
+            display: none;
+            position: fixed;
+            z-index: 200;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s;
+        }
+
+        #modal-image {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .modal-close:hover,
+        .modal-close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
     </style>
@@ -1079,6 +1141,13 @@
         <button class="close-button" id="inventory-close-button">&times;</button>
         <h2>Inventário de Cartas</h2>
         <div id="inventory-content"></div>
+    </div>
+    
+    <div id="card-modal">
+        <span class="modal-close" id="modal-close-button">&times;</span>
+        <div class="modal-content">
+            <img id="modal-image" src="" alt="Carta Ampliada">
+        </div>
     </div>
 
     <script>
@@ -1600,6 +1669,7 @@
                 currentTeamIndicator.textContent = 'Vez do Time A';
             } else {
                 teamBElement.classList.add('active');
+                teamBElement.classList.add('active');
                 currentTeamIndicator.textContent = 'Vez do Time B';
             }
         }
@@ -1829,6 +1899,10 @@
                         img.className = 'inventory-card';
                         img.src = cardUrl;
                         img.alt = `Carta de ${category.name}`;
+                        
+                        // Adicionar evento de clique para abrir o modal
+                        img.addEventListener('click', () => openCardModal(img.src));
+
                         cardsGrid.appendChild(img);
                     });
 
@@ -1837,6 +1911,35 @@
                 }
             }
         }
+        
+        // --- Novo JavaScript para o Modal ---
+        const cardModal = document.getElementById('card-modal');
+        const modalImage = document.getElementById('modal-image');
+        const modalCloseButton = document.getElementById('modal-close-button');
+
+        // Função para abrir o modal
+        function openCardModal(imageUrl) {
+            modalImage.src = imageUrl;
+            cardModal.style.display = 'flex';
+        }
+
+        // Função para fechar o modal
+        function closeCardModal() {
+            cardModal.style.display = 'none';
+            modalImage.src = '';
+        }
+
+        // Event listener para fechar o modal ao clicar no botão 'X'
+        modalCloseButton.addEventListener('click', closeCardModal);
+
+        // Event listener para fechar o modal ao clicar fora da imagem
+        cardModal.addEventListener('click', (event) => {
+            if (event.target === cardModal) {
+                closeCardModal();
+            }
+        });
+
+        // --- Fim do novo JavaScript do Modal ---
 
         // Event listener para abrir/fechar o painel de inventário
         inventoryToggleButton.addEventListener('click', () => {
@@ -1869,5 +1972,3 @@
     </script>
 </body>
 </html>
-                     
-
