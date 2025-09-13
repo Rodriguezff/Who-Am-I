@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -740,6 +740,91 @@
             cursor: not-allowed;
             transform: none;
         }
+
+        #inventory-toggle-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 100;
+            transition: background-color 0.3s;
+        }
+        
+        #inventory-toggle-button:hover {
+            background-color: #2980b9;
+        }
+
+        #inventory-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 350px;
+            background-color: #f8f9fa;
+            box-shadow: -4px 0 10px rgba(0,0,0,0.2);
+            z-index: 99;
+            transform: translateX(100%);
+            transition: transform 0.5s ease-in-out;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        #inventory-panel.open {
+            transform: translateX(0);
+        }
+        
+        #inventory-panel .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .inventory-category {
+            margin-bottom: 20px;
+        }
+
+        .inventory-category-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .inventory-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+        }
+
+        .inventory-card {
+            width: 100%;
+            height: 120px;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
     </style>
 </head>
 <body>
@@ -983,10 +1068,17 @@
                         <button class="draw-button" id="draw-card-11">Puxar Carta</button>
                         <div class="card-counter" id="counter-11"></div>
                     </div>
-
-                    </div>
+                </div>
             </div>
         </div>
+    </div>
+    
+    <button id="inventory-toggle-button">📚</button>
+
+    <div id="inventory-panel">
+        <button class="close-button" id="inventory-close-button">&times;</button>
+        <h2>Inventário de Cartas</h2>
+        <div id="inventory-content"></div>
     </div>
 
     <script>
@@ -1707,6 +1799,56 @@
             }
         }
         
+        // --- Novo JavaScript para o Inventário ---
+
+        const inventoryPanel = document.getElementById('inventory-panel');
+        const inventoryToggleButton = document.getElementById('inventory-toggle-button');
+        const inventoryCloseButton = document.getElementById('inventory-close-button');
+        const inventoryContent = document.getElementById('inventory-content');
+
+        // Função para popular o inventário com todas as cartas
+        function setupInventory() {
+            inventoryContent.innerHTML = '';
+            for (const categoryIndex in categories) {
+                const category = categories[categoryIndex];
+                // Ignorar categorias sem cartas (como a Escolha Livre)
+                if (category.cards && category.cards.length > 0) {
+                    const categoryDiv = document.createElement('div');
+                    categoryDiv.className = 'inventory-category';
+                    
+                    const title = document.createElement('h3');
+                    title.className = 'inventory-category-title';
+                    title.innerHTML = `${category.icon} ${category.name}`;
+                    categoryDiv.appendChild(title);
+
+                    const cardsGrid = document.createElement('div');
+                    cardsGrid.className = 'inventory-cards-grid';
+
+                    category.cards.forEach(cardUrl => {
+                        const img = document.createElement('img');
+                        img.className = 'inventory-card';
+                        img.src = cardUrl;
+                        img.alt = `Carta de ${category.name}`;
+                        cardsGrid.appendChild(img);
+                    });
+
+                    categoryDiv.appendChild(cardsGrid);
+                    inventoryContent.appendChild(categoryDiv);
+                }
+            }
+        }
+
+        // Event listener para abrir/fechar o painel de inventário
+        inventoryToggleButton.addEventListener('click', () => {
+            inventoryPanel.classList.toggle('open');
+        });
+
+        inventoryCloseButton.addEventListener('click', () => {
+            inventoryPanel.classList.remove('open');
+        });
+
+        // --- Fim do novo JavaScript ---
+
         // Inicializar o D12 com o valor inicial
         updateD12Value(d12CurrentValue);
         
@@ -1721,6 +1863,11 @@
         
         // Chamar resetGameState no carregamento para garantir o estado inicial correto
         resetGameState();
+        
+        // Chamar a nova função para configurar o inventário
+        setupInventory();
     </script>
 </body>
 </html>
+                     
+
