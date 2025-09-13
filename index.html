@@ -953,7 +953,38 @@
                         <button class="draw-button" id="draw-card-9">Puxar Carta</button>
                         <div class="card-counter" id="counter-9"></div>
                     </div>
-                </div>
+                    
+                    <div class="card-deck-container" id="deck-container-10">
+                        <div class="card-deck-title">Teams</div>
+                        <div class="card-display card-stack" id="card-display-10">
+                            <div class="card-back">
+                                <div class="card-back-icon">🛡️</div>
+                                <div class="card-back-text">Teams</div>
+                            </div>
+                            <div class="card-front" id="card-front-10">
+                                <img class="card-image" id="card-image-10" src="" alt="Carta de Teams">
+                            </div>
+                        </div>
+                        <button class="draw-button" id="draw-card-10">Puxar Carta</button>
+                        <div class="card-counter" id="counter-10"></div>
+                    </div>
+
+                    <div class="card-deck-container" id="deck-container-11">
+                        <div class="card-deck-title">Heroes</div>
+                        <div class="card-display card-stack" id="card-display-11">
+                            <div class="card-back">
+                                <div class="card-back-icon">🦸</div>
+                                <div class="card-back-text">Heroes</div>
+                            </div>
+                            <div class="card-front" id="card-front-11">
+                                <img class="card-image" id="card-image-11" src="" alt="Carta de Heroes">
+                            </div>
+                        </div>
+                        <button class="draw-button" id="draw-card-11">Puxar Carta</button>
+                        <div class="card-counter" id="counter-11"></div>
+                    </div>
+
+                    </div>
             </div>
         </div>
     </div>
@@ -1081,12 +1112,12 @@
         const skipCounterB = document.getElementById('skip-counter-b');
 
         // Array de ícones para o D12
-        const d12Icons = ['🎵', '🏆', '🎓', '📢', '🎥', '📺', '🐾', '📍', '📕', '💼', '❓', '❓']; // Dois '❓' para Free Choice
+        const d12Icons = ['🎵', '🏆', '🎓', '📢', '🎥', '📺', '🐾', '📍', '📕', '💼', '🛡️', '🦸', '❓', '❓']; 
         
         // Índice do ícone de localização
         const locationIconIndex = 7;
         // Índices para as categorias Free Choice
-        const freeChoiceIndexes = [10, 11]; // Agora temos dois índices para Free Choice
+        const freeChoiceIndexes = [12, 13];
         
        const categories = {
     0: { // Music (nota musical)
@@ -1209,12 +1240,36 @@
             'professions/26.jpg', 'professions/27.jpg', 'professions/28.jpg', 'professions/29.jpg', 'professions/30.jpg'
         ]
     },
-    10: { // Free Choice 1
+    10: { // NOVO: Teams (escudo)
+        name: 'teams',
+        icon: '🛡️',
+        cards: [
+            'teams/01.jpg', 'teams/02.jpg', 'teams/03.jpg', 'teams/04.jpg', 'teams/05.jpg',
+            'teams/06.jpg', 'teams/07.jpg', 'teams/08.jpg', 'teams/09.jpg', 'teams/10.jpg',
+            'teams/11.jpg', 'teams/12.jpg', 'teams/13.jpg', 'teams/14.jpg', 'teams/15.jpg',
+            'teams/16.jpg', 'teams/17.jpg', 'teams/18.jpg', 'teams/19.jpg', 'teams/20.jpg',
+            'teams/21.jpg', 'teams/22.jpg', 'teams/23.jpg', 'teams/24.jpg', 'teams/25.jpg',
+            'teams/26.jpg', 'teams/27.jpg', 'teams/28.jpg', 'teams/29.jpg', 'teams/30.jpg'
+        ]
+    },
+    11: { // NOVO: Heroes (capa)
+        name: 'heroes',
+        icon: '🦸',
+        cards: [
+            'heroes/01.jpg', 'heroes/02.jpg', 'heroes/03.jpg', 'heroes/04.jpg', 'heroes/05.jpg',
+            'heroes/06.jpg', 'heroes/07.jpg', 'heroes/08.jpg', 'heroes/09.jpg', 'heroes/10.jpg',
+            'heroes/11.jpg', 'heroes/12.jpg', 'heroes/13.jpg', 'heroes/14.jpg', 'heroes/15.jpg',
+            'heroes/16.jpg', 'heroes/17.jpg', 'heroes/18.jpg', 'heroes/19.jpg', 'heroes/20.jpg',
+            'heroes/21.jpg', 'heroes/22.jpg', 'heroes/23.jpg', 'heroes/24.jpg', 'heroes/25.jpg',
+            'heroes/26.jpg', 'heroes/27.jpg', 'heroes/28.jpg', 'heroes/29.jpg', 'heroes/30.jpg'
+        ]
+    },
+    12: { // Free Choice 1
         name: 'Free Choice',
         icon: '❓',
         cards: [] 
     },
-    11: { // Free Choice 2
+    13: { // Free Choice 2
         name: 'Free Choice',
         icon: '❓',
         cards: []
@@ -1416,9 +1471,9 @@
             
             // Forçar escolha livre nas duas primeiras rolagens
             if (rollCount <= 2) {
-                d12CurrentValue = freeChoiceIndexes[0]; // Usar o primeiro índice de Free Choice (10)
+                d12CurrentValue = freeChoiceIndexes[0]; 
             } else {
-                d12CurrentValue = Math.floor(Math.random() * 12);
+                d12CurrentValue = Math.floor(Math.random() * 14); // Atualizado para 14 faces
             }
             
             updateD12Value(d12CurrentValue);
